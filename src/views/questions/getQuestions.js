@@ -87,6 +87,7 @@ const GetQuestions = () => {
                         <th>questions</th>
                         <th>Belonging Chapter</th>
                         <th>Belonging Sub Category</th>
+                        <th>Belonging Category</th>
                         {/* <th class="address">status</th> */}
                         {/* <th>Created by</th> */}
                     </tr>
@@ -97,7 +98,8 @@ const GetQuestions = () => {
                             <td>{i + 1}</td>
                             <td>{item.question}</td>
                             <td>{item.chapter_meta.name?item.chapter_meta.name:""}</td>
-                            <td>{item.chapter_meta.subcategory_meta.name?item.chapter_meta.subcategory_meta.name:""}</td>
+                            <td>{item.subcategory_meta?item.subcategory_meta.name:""}</td>
+                            <td>{item.category_meta?item.category_meta.name:""}</td>
                             {/* <Button className="btn btn-primary bg-green mr-2" onClick={e => deletequestion(e, item._id,)}> delete </Button> */}
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}

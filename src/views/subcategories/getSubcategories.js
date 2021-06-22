@@ -5,9 +5,24 @@ import { Button, Table } from 'react-bootstrap'
 import *as  CONSTANT from '../../constant'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pagination from '../pagination/pagination';
+
 
 const GetSubCategories = () => {
     const history = useHistory()
+    const [showPerPage, setShowPerPage] = useState(10);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [index, setIndex] = useState(1);
+
+    const onPaginationChange = (start, end) => {
+        // console.warn("getee, ", start, end)
+        setPage(start)
+        setIndex(end)
+    };
+
+
+
     const [category, setCategory] = useState([{
         id: "",
         name: "",
@@ -21,11 +36,11 @@ const GetSubCategories = () => {
     useEffect(() => {
         loadCategory();
 
-    }, [search]);
+    }, [search,total,page]);
     const loadCategory = async () => {
         let array = []
         const data = {
-            page: 1,
+            page: page,
             limit: 5
         }
         if (!(Object.keys(search).length === 0 && search.constructor === Object)) {
@@ -39,6 +54,7 @@ const GetSubCategories = () => {
                 array.push(item)
             }
         }
+        await setTotal(res.data.data.total)
         setCategory(array);
     };
     const deleteCategory = async (e, item) => {
@@ -104,6 +120,14 @@ const GetSubCategories = () => {
                 </tbody>
             </Table>
             <ToastContainer />
+            {
+                total > 0? <Pagination
+                showPerPage={showPerPage}
+                onPaginationChange={onPaginationChange}
+                total={total}
+                page={page}
+            />:""
+            }
             {/* <Button variant="primary">Primary</Button> */}
         </div>
     )

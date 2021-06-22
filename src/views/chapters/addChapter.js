@@ -15,9 +15,11 @@ const AddChapter = () => {
     // category_meta: {},
     subcategory_meta: {}
   });
-
   const [subcategory, setSubCategory] = useState([]);
   const [subcategorymeta, setSubCategorymeta] = useState();
+
+  const [category, setCategory] = useState([]);
+  const [categorymeta, setCategorymeta] = useState();
   // const options = {
   //   headers: {'token': localStorage.getItem('token')}
   // };
@@ -26,7 +28,8 @@ const AddChapter = () => {
   const { name, content } = chapter;
 
   useEffect(() => {
-    loadSubCategory();
+    loadCategory()
+    // loadSubCategory();
   }, []);
 
   const onInputChange = e => {
@@ -37,9 +40,23 @@ const AddChapter = () => {
     console.log("eeeeeeeeeeee", e.target.name, e.target.value)
     await setSubCategorymeta(subcategory[e.target.value])
   };
+  const onInputChange3 = async (e) => {
+    console.log("eeeeeeeeeeee", e.target.name, e.target.value)
+    await setCategorymeta(category[e.target.value])
+    loadSubCategory(category[e.target.value])
 
-  const loadSubCategory = async () => {
-    await axios.get(`${CONSTANT.baseUrl}/api/admin/subcategory-list`).then((data1) => {
+  };
+
+  const loadCategory = async () => {
+    await axios.get(`${CONSTANT.baseUrl}/api/admin/category-list`).then((data1) => {
+      setCategory(data1.data.data)
+    }).catch((err) => {
+      alert("err in catch")
+    })
+  }
+  const loadSubCategory = async (item) => {
+    console.log("item......", item)
+    await axios.get(`${CONSTANT.baseUrl}/api/admin/subcategory-list?_id=${item._id}`).then((data1) => {
       setSubCategory(data1.data.data)
     }).catch((err) => {
       alert("err in catch")
@@ -48,8 +65,9 @@ const AddChapter = () => {
   }
   const onSubmit = async e => {
     e.preventDefault();
-    if (subcategorymeta) {
+    if (subcategorymeta && categorymeta) {
       chapter.subcategory_meta = subcategorymeta
+      chapter.category_meta = categorymeta
       console.warn("onsumbit", chapter)
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-chapter`, chapter);
       toast(res.data.message);
@@ -63,6 +81,24 @@ const AddChapter = () => {
       <div className="w-75 mx-auto shadow p-5">
         <h2 className="text-center mb-4">Add Chapter</h2>
         <form onSubmit={e => onSubmit(e)}>
+        <div class="form-group col-sm-6">
+            <label>Select Category *</label>
+            <select class="form-control"
+              onChange={e => onInputChange3(e)} >
+                <option  value={"N/A"}>
+                  {"Select"}
+                </option>
+              {
+                category.map((option, index) =>
+                
+                 <option key={index} value={index}>
+                  {option.name}
+                </option>)
+              }
+              {/* <option value={"1"}>Yes</option>
+              <option value={"0"}>No</option> */}
+            </select>
+          </div>
           <div class="form-group col-sm-6">
             <label>Select Sub Category *</label>
             <select class="form-control"

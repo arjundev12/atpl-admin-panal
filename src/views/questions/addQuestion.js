@@ -22,6 +22,9 @@ const AddQuestion = () => {
 
   const [chapter, setChapter] = useState([]);
   const [chaptermeta, setChaptermeta] = useState();
+
+  const [category, setCategory] = useState([]);
+  const [categorymeta, setCategorymeta] = useState();
   // const options = {
   //   headers: {'token': localStorage.getItem('token')}
   // };
@@ -30,13 +33,20 @@ const AddQuestion = () => {
   const { question, content } = questions;
 
   useEffect(() => {
-    loadSubCategory();
+    // loadSubCategory();
+    loadCategory()
     // loadChapter();
   }, []);
 
   const onInputChange = e => {
     // console.log("eeeeeeeeeeee", e.target.name, e.target.value)
     setQuestion({ ...questions, [e.target.name]: e.target.value });
+  };
+  const onInputChange1 = async (e) => {
+    console.log("eeeeeeeeeeee", e.target.name, e.target.value)
+    await setCategorymeta(category[e.target.value])
+    loadSubCategory(category[e.target.value])
+
   };
   const onInputChange2 = async (e) => {
     console.log("eeeeeeeeeeee", e.target.name, e.target.value)
@@ -50,8 +60,15 @@ const AddQuestion = () => {
     await setChaptermeta(chapter[e.target.value])
     
   };
-  const loadSubCategory = async () => {
-    await axios.get(`${CONSTANT.baseUrl}/api/admin/subcategory-list`).then((data1) => {
+  const loadCategory = async () => {
+    await axios.get(`${CONSTANT.baseUrl}/api/admin/category-list`).then((data1) => {
+      setCategory(data1.data.data)
+    }).catch((err) => {
+      alert("err in catch")
+    })
+  }
+  const loadSubCategory = async (item) => {
+    await axios.get(`${CONSTANT.baseUrl}/api/admin/subcategory-list?_id=${item._id}`).then((data1) => {
       setSubCategory(data1.data.data)
     }).catch((err) => {
       alert("err in catch")
@@ -68,10 +85,11 @@ const AddQuestion = () => {
   }
   const onSubmit = async e => {
     e.preventDefault();
-    if (subcategorymeta && chaptermeta) {
+    if (subcategorymeta && chaptermeta && categorymeta) {
+      questions.category_meta = categorymeta
       questions.chapter_meta = chaptermeta
       questions.subcategory_meta = subcategorymeta
-      console.warn("onsumbit", questions.subcategory_meta, questions.chapter_meta )
+      console.warn("onsumbit", questions )
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-question`, questions);
       toast(res.data.message);
       setTimeout(function () { history.push("/questions"); }, 1000);
@@ -84,6 +102,25 @@ const AddQuestion = () => {
       <div className="w-75 mx-auto shadow p-5">
         <h2 className="text-center mb-4">Add question</h2>
         <form onSubmit={e => onSubmit(e)}>
+        <div class="form-group col-sm-6">
+            <label>Select Category *</label>
+            <select class="form-control"
+              onChange={e => onInputChange1(e)} >
+                <option  value={"N/A"}>
+                  {"Select"}
+                </option>
+              {
+                category.map((option, index) =>
+                
+                 <option key={index} value={index}>
+                  {option.name}
+                </option>)
+              }
+              {/* <option value={"1"}>Yes</option>
+              <option value={"0"}>No</option> */}
+            </select>
+          </div>
+         
           <div class="form-group col-sm-6">
             <label>Select Sub Category *</label>
             <select class="form-control"
