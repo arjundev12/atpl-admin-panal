@@ -41,7 +41,7 @@ const GetSubCategories = () => {
         let array = []
         const data = {
             page: page,
-            limit: 5
+            limit: showPerPage
         }
         if (!(Object.keys(search).length === 0 && search.constructor === Object)) {
             data.searchData = search.text

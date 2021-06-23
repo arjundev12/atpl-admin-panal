@@ -5,9 +5,20 @@ import { Button, Table } from 'react-bootstrap'
 import *as  CONSTANT from '../../constant'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Pagination from '../pagination/pagination';
 const GetQuestions = () => {
     const history = useHistory()
+    const [showPerPage, setShowPerPage] = useState(10);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [index, setIndex] = useState(1);
+
+    const onPaginationChange = (start, end) => {
+        // console.warn("getee, ", start, end)
+        setPage(start)
+        setIndex(end)
+    };
+
     const [question, setQuestion] = useState([{
         id: "",
         question: "",
@@ -26,12 +37,12 @@ const GetQuestions = () => {
     useEffect(() => {
         loadQuestion();
 
-    }, [search]);
+    }, [search,total,page]);
     const loadQuestion = async () => {
         let array = []
         const data = {
-            page: 1,
-            limit: 5
+            page: page,
+            limit: showPerPage
         }
         if (!(Object.keys(search).length === 0 && search.constructor === Object)) {
             data.searchData = search.text
@@ -44,6 +55,7 @@ const GetQuestions = () => {
                 array.push(item)
             }
         }
+        await setTotal(res.data.data.total)
         setQuestion(array);
     };
     const deletequestion = async (e, item) => {
@@ -113,6 +125,14 @@ const GetQuestions = () => {
                 </tbody>
             </Table>
             <ToastContainer />
+            {
+                total > 0? <Pagination
+                showPerPage={showPerPage}
+                onPaginationChange={onPaginationChange}
+                total={total}
+                page={page}
+            />:""
+            }
             {/* <Button variant="primary">Primary</Button> */}
         </div>
     )
