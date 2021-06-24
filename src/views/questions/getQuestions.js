@@ -52,6 +52,8 @@ const GetQuestions = () => {
         // console.warn(res.data.data)
         for (let item of res.data.data.docs) {
             if (item.question) {
+               let ifImage=  item.question.split("/")
+               ifImage[0]=="public"? item.isImage = item.question : item.isImage ="false"
                 array.push(item)
             }
         }
@@ -100,6 +102,7 @@ const GetQuestions = () => {
                         <th>Belonging Chapter</th>
                         <th>Belonging Sub Category</th>
                         <th>Belonging Category</th>
+                        <th>Action</th>
                         {/* <th class="address">status</th> */}
                         {/* <th>Created by</th> */}
                     </tr>
@@ -108,11 +111,11 @@ const GetQuestions = () => {
                     {
                         question.map((item, i) => <tr>
                             <td>{i + 1}</td>
-                            <td>{item.question}</td>
+                            { item.isImage== "false" ?<td>{item.question}</td> : <img src={CONSTANT.img_url+ item.isImage} height={30} width={50} /> }
                             <td>{item.chapter_meta.name?item.chapter_meta.name:""}</td>
                             <td>{item.subcategory_meta?item.subcategory_meta.name:""}</td>
                             <td>{item.category_meta?item.category_meta.name:""}</td>
-                            {/* <Button className="btn btn-primary bg-green mr-2" onClick={e => deletequestion(e, item._id,)}> delete </Button> */}
+                            <Button className="btn btn-primary bg-green mr-2" onClick={e => deletequestion(e, item._id,)}> delete </Button>
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>

@@ -31,64 +31,45 @@ const _nav =  [
   //   // ]
   // },
   
-  {
+ 
+  
+   {
+    _tag: 'CSidebarNavDropdown',
+    name: 'CMS Master',
+    // to: '/transactions',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    _children: [
+      {
     _tag: 'CSidebarNavItem',
     name: 'Categories',
     to: '/categories',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
   },
    {
     _tag: 'CSidebarNavItem',
     name: 'Sub Categories',
     to: '/subcategories',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Chapters',
     to: '/chapters',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Questions',
     to: '/questions',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
   },
+    ]
   
-  //  {
-  //   _tag: 'CSidebarNavDropdown',
-  //   name: 'Transactions',
-  //   // to: '/transactions',
-  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
-  //   _children: [
-  //     {
-  //       _tag: 'CSidebarNavItem',
-  //       name: 'All Transactions',
-  //       to: '/transactions',
-  //     },
-  //     {
-  //       _tag: 'CSidebarNavItem',
-  //       name: 'Earning',
-  //       to: '/earning',
-  //     },
-  //     {
-  //       _tag: 'CSidebarNavItem',
-  //       name: 'Mining',
-  //       to: '/mining',
-  //     },
-  //     {
-  //       _tag: 'CSidebarNavItem',
-  //       name: 'Referral',
-  //       to: '/referral',
-  //     },
-  //   ]
-  
-  // },
+  },
   // {
   //   _tag: 'CSidebarNavItem',
   //   name: 'Manage Price',

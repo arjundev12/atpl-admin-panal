@@ -59,7 +59,7 @@ const GetSubCategories = () => {
     };
     const deleteCategory = async (e, item) => {
         // console.log("deleteCategory", item)
-        await axios.delete(`${CONSTANT.baseUrl}/api/admin/delete-category?_id=${item}`).then((data1) => {
+        await axios.delete(`${CONSTANT.baseUrl}/api/admin/delete-subcategory?_id=${item}`).then((data1) => {
             console.log("response", data1)
             // toast( data1.data.data.message)
             loadCategory()
@@ -97,7 +97,7 @@ const GetSubCategories = () => {
                         <th>S.no</th>
                         <th>Sub Categories</th>
                         <th>Belonging Categories</th>
-                        {/* <th >Action</th> */}
+                        <th >Action</th>
                         {/* <th>Created by</th> */}
                     </tr>
                 </thead>
@@ -107,7 +107,7 @@ const GetSubCategories = () => {
                             <td>{i + 1}</td>
                             <td>{item.name}</td>
                             <td>{item.category_meta.name?item.category_meta.name:""}</td>
-                            {/* <Button className="btn btn-primary bg-green mr-2" onClick={e => deleteCategory(e, item._id,)}> delete </Button> */}
+                            <Button className="btn btn-primary bg-green mr-2" onClick={e => deleteCategory(e, item._id,)}> delete </Button>
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>

@@ -95,6 +95,7 @@ const GetChapters = () => {
                         <th>Chapters</th>
                         <th>Belonging Sub Category</th>
                         <th>Belonging  Category</th>
+                        <th>Action</th>
                         {/* <th class="address">status</th> */}
                         {/* <th>Created by</th> */}
                     </tr>
@@ -106,7 +107,7 @@ const GetChapters = () => {
                             <td>{item.name}</td>
                             <td>{item.subcategory_meta.name?item.subcategory_meta.name:""}</td>
                             <td>{item.subcategory_meta.name?item.subcategory_meta.category_meta.name:""}</td>
-                            {/* <Button className="btn btn-primary bg-green mr-2" onClick={e => deletechapter(e, item._id,)}> delete </Button> */}
+                            <Button className="btn btn-primary bg-green mr-2" onClick={e => deletechapter(e, item._id,)}> delete </Button>
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>

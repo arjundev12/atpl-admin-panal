@@ -60,6 +60,18 @@ const GetCategories = () => {
         console.log("search text", e.target.name, e.target.value )
         setSearch({ ...search, [e.target.name]: e.target.value });
     }
+    const deleteCategory = async (e, item) => {
+        // console.log("deleteCategory", item)
+        await axios.delete(`${CONSTANT.baseUrl}/api/admin/delete-category?_id=${item}`).then((data1) => {
+            console.log("response", data1)
+            // toast( data1.data.data.message)
+            loadCategory()
+        }).catch((err) => {
+            console.log("error", err)
+            toast(err.data.message)
+        })
+
+    };
     return (
         <div>
             {/* <Link className="btn btn-primary" to="/">
@@ -83,7 +95,8 @@ const GetCategories = () => {
                     <tr>
                         <th>S.no</th>
                         <th>name</th>
-                        {/* <th>Content</th>
+                        <th>Action</th>
+                        {/* 
                         <th class="address">status</th> */}
                         {/* <th>Created by</th> */}
                     </tr>
@@ -93,6 +106,7 @@ const GetCategories = () => {
                         category.map((item, i) => <tr>
                             <td>{i + 1}</td>
                             <td>{item.name}</td>
+                            <Button className="btn btn-primary bg-green mr-2" onClick={e => deleteCategory(e, item._id,)}> delete </Button>
                             {/* <td>{item.content}</td> */}
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
