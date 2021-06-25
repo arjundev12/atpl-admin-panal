@@ -18,6 +18,9 @@ const AddQuestion = () => {
     category_meta: {},
     chapter_meta: {},
     subcategory_meta: {},
+    info :"",
+    flage: "",
+    pin: ""
   });
 
   const [subcategory, setSubCategory] = useState([]);
@@ -32,7 +35,7 @@ const AddQuestion = () => {
   //   headers: {'token': localStorage.getItem('token')}
   // };
   const [options, setOptions] = useState();
-  const { question, content } = questions;
+  const { question, content, info ,pin,flag} = questions;
   useEffect(() => {
     loadCategory()
   }, []);
@@ -332,7 +335,6 @@ const AddQuestion = () => {
             onChange={e => onInputChangeImage(e)}
           /> 
            }
-           {/* {type == 'true'?"": <Button name = "question" onClick = {e =>uploadImage(e)}>submit</Button>} */}
           </div>
          
           <div className="form-group">
@@ -437,21 +439,17 @@ const AddQuestion = () => {
               {/* <option  value={"D"}> D </option> */}
             </select>
           </div>
-          {/* <div className="form-group"> */}
-          {/* <input
+          <div className="form-group">
+            <label> Info</label>
+            <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Enter Your content"
-              name="content"
-              value={content}
+              placeholder="Enter info description"
+              name="info"
+              value={info}
               onChange={e => onInputChange(e)}
-            /> */}
-          {/* <ReactQuill theme="snow" value={content} onChange={e => onInputChange2(e)}/>
-          </div> */}
-          {/* <div><input type="file" name="file" onChange={e => onInputChange1(e)} />
-            <button type="button" className="btn btn-primary" onClick={e => uploadImage(e)}>Upload</button>
-
-          </div> */}
+            />
+          </div>
           <button className="btn btn-primary btn-block">Add question</button>
         </form>
 

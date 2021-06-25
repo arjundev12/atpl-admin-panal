@@ -62,13 +62,32 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Questions',
+    name: 'Add Questions',
+    to: '/questions',
+    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Add Questions xml file',
     to: '/questions',
     // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
   },
     ]
   
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Subscription',
+    to: '/subscription',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'FAQ',
+    to: '/faq',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
   // {
   //   _tag: 'CSidebarNavItem',

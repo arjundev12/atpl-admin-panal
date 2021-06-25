@@ -5,37 +5,7 @@ import DAsbosdbjsdf from  './views/dashboard/Dashboard'
 
 // const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/base/cards/Cards'));
-// const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'));
-// const Collapses = React.lazy(() => import('./views/base/collapses/Collapses'));
-// const BasicForms = React.lazy(() => import('./views/base/forms/BasicForms'));
-
-// const Jumbotrons = React.lazy(() => import('./views/base/jumbotrons/Jumbotrons'));
-// const ListGroups = React.lazy(() => import('./views/base/list-groups/ListGroups'));
-// const Navbars = React.lazy(() => import('./views/base/navbars/Navbars'));
-// const Navs = React.lazy(() => import('./views/base/navs/Navs'));
-// const Paginations = React.lazy(() => import('./views/base/paginations/Pagnations'));
-// const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'));
-// const ProgressBar = React.lazy(() => import('./views/base/progress-bar/ProgressBar'));
-// const Switches = React.lazy(() => import('./views/base/switches/Switches'));
-
-// const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'));
-// const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'));
-// const BrandButtons = React.lazy(() => import('./views/buttons/brand-buttons/BrandButtons'));
-// const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdowns/ButtonDropdowns'));
-// const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
-// const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
-// const Charts = React.lazy(() => import('./views/charts/Charts'));
-// const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'));
-// const Flags = React.lazy(() => import('./views/icons/flags/Flags'));
-// const Brands = React.lazy(() => import('./views/icons/brands/Brands'));
-// const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'));
-// const Badges = React.lazy(() => import('./views/notifications/badges/Badges'));
-// const Modals = React.lazy(() => import('./views/notifications/modals/Modals'));
-// const Colors = React.lazy(() => import('./views/theme/colors/Colors'));
-// const Typography = React.lazy(() => import('./views/theme/typography/Typography'));
-// const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
-// const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
 
 const getCategories = React.lazy(() => import('./views/categories/getCategories'));
 const addCategories = React.lazy(() => import('./views/categories/addCategories'));
@@ -47,7 +17,11 @@ const AddChapter = React.lazy(() => import('./views/chapters/addChapter'));
 const GetQuestions = React.lazy(() => import('./views/questions/getQuestions'));
 const AddQuestions = React.lazy(() => import('./views/questions/addQuestion'));
 
+const GetFaq = React.lazy(() => import('./views/faq/getFaq'));
+const UpdateFaq = React.lazy(() => import('./views/faq/updateFaq'));
 
+const GetSubscription = React.lazy(() => import('./views/subscription/getSubscription'));
+const AddSubscription = React.lazy(() => import('./views/subscription/addSubscription'));
 
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
@@ -83,6 +57,11 @@ const routes = [
   { path: '/questions', exact: true, name: 'questions', component: GetQuestions },
   { path: '/add/question', exact: true, name: 'Add question', component: AddQuestions },
 
+  { path: '/faq', exact: true, name: 'faq', component: GetFaq },
+  { path: '/update/faq/:id', exact: true, name: 'reply', component: UpdateFaq },
+
+  { path: '/subscription', exact: true, name: 'Subscription', component: GetSubscription },
+  { path: '/add/subscription', exact: true, name: 'Add Subscription', component: AddSubscription },
 
 
 
