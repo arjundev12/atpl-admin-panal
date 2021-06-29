@@ -8,10 +8,6 @@ import *as  CONSTANT from '../../constant'
 import Pagination from '../pagination/pagination'
 
 import '../../css/style.css'
-
-
-
-
 const Users = () => {
     const history = useHistory()
     //////////////////////////////////pagination/////////////////////////////////////
@@ -103,9 +99,9 @@ const Users = () => {
 
     return (
         <div>
-            {/* <Link className="btn btn-primary" to="/">
-                back to Home
-            </Link> */}
+            <Link className="btn btn-primary" to="/users/add-users">
+                Add User
+            </Link>
             <div className="searchBox">
                 <input
                     type="text"
@@ -126,35 +122,33 @@ const Users = () => {
                         <th>Username</th>
                         <th>Type</th>
                         {/* <th>Minner Status</th> */}
-                        <th class="address">Minner Status</th>
-                        <th>Actions</th>
+                        {/* <th className="address">type</th> */}
+                        {/* <th>Actions</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     {
                         user.map((item, i) => <tr>
-                            <td>{i + index + 1}</td>
+                            <td>{i + 1}</td>
                             <td>{item.name}</td>
                             <td>{item.email}</td>
                             <td>{item.username}</td>
                             <td>{item.user_type}</td>
                             {/* <td>{item.minner_Activity + ""}</td> */}
-                            <td>
-                                <select class="form-control" name="minner_Activity" value={item.minner_Activity}
+                            {/* <td>
+                                <select className="form-control" name="minner_Activity" value={item.minner_Activity}
                                     onChange={e => onInputChange(e, item)}>
                                     <option value={true} >Active</option>
                                     <option value={false}>Inactive</option>
-                                    {/* <option value="blocked">Block</option> */}
-                                </select></td>
-                            <td><Link className="btn btn-primary mr-2 " to={`/user/${item._id}`}>view </Link>
+                                </select></td> */}
+                            {/* <td><Link className="btn btn-primary mr-2 " to={`/user/${item._id}`}>view </Link>
                                 {item.block_user == '1' ? (
                                     <Button className="btn btn-primary bg-red mr-2" onClick={e => userBlock(e, item._id, "0")}> Blocked </Button>
                                 ) : (
                                     <Button className="btn btn-primary bg-green mr-2" onClick={e => userBlock(e, item._id, "1")}> Unblock </Button>
                                 )}
-                                {/* */}
-                                {/* <Link className="btn btn-primary " to="/"> delete</Link> */}
-                            </td>
+                                
+                            </td> */}
                         </tr>)
                     }
                 </tbody>

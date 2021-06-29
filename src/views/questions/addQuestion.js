@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Button, Table } from 'react-bootstrap'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import samplefile from '../../assets/samplesheet.xlsx'
 
 const AddQuestion = () => {
   let history = useHistory();
@@ -18,7 +18,7 @@ const AddQuestion = () => {
     category_meta: {},
     chapter_meta: {},
     subcategory_meta: {},
-    info :"",
+    info: "",
     flage: "",
     pin: ""
   });
@@ -35,7 +35,7 @@ const AddQuestion = () => {
   //   headers: {'token': localStorage.getItem('token')}
   // };
   const [options, setOptions] = useState();
-  const { question, content, info ,pin,flag} = questions;
+  const { question, content, info, pin, flag } = questions;
   useEffect(() => {
     loadCategory()
   }, []);
@@ -79,14 +79,32 @@ const AddQuestion = () => {
     })
   }
   const [image, setImage] = useState({
-    file : null,
+    file: null,
     A: null,
     B: null,
     C: null,
     D: null,
   });
+  const [filepath, setFilepath] = useState();
+  const onSetXlxFile = async e => {
+    console.warn("............image....", [e.target.name], e.target.files[0])
+    const formData = new FormData();
+    formData.append(
+      "xlsSheet",
+      e.target.files[0],
+    );
+    console.warn("xlsfile", formData)
+    const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/uploade-sheet`, formData, { "Content-Type": "multipart/form-data" });
+    console.log("response", res.data)
+    if (res.data.code == 200) {
+      setFilepath(res.data.data)
+    } else {
+      console.warn("error", res.data.message)
+    }
+    console.log("filepath", filepath)
+  }
   const onInputChangeImage = async e => {
-    console.warn("............image....",[e.target.name], e.target.files[0])
+    console.warn("............image....", [e.target.name], e.target.files[0])
     // let image_as_base64 = URL.createObjectURL(e.target.files[0])
     // let image_as_files = e.target.files[0];
     // console.log(" URL.createObjectURL", image_as_base64)
@@ -94,134 +112,72 @@ const AddQuestion = () => {
     // setImage({ file: image_as_files })
     let reader = await new FileReader();
     reader.readAsDataURL(e.target.files[0]);
-    reader.onload =async function  () {
+    reader.onload = async function () {
       console.warn("................", reader.result)
       // await setImage( {...image, [e.target.name]: reader.result })
       let data = {}
-      if(e.target.name == "A"){
+      if (e.target.name == "A") {
         data.image = reader.result
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
         if (res.data.code == 200) {
           setOptions({ ...options, A: res.data.data });
           toast(res.data.message);
-          console.warn("response",res.data.data)
+          console.warn("response", res.data.data)
           // await setCategory({ ...category, image: res.data.data });
-    
+
         }
       }
-      if(e.target.name== "B"){
+      if (e.target.name == "B") {
         data.image = reader.result
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
         if (res.data.code == 200) {
           setOptions({ ...options, B: res.data.data });
           toast(res.data.message);
-          console.warn("response",res.data.data)
+          console.warn("response", res.data.data)
           // await setCategory({ ...category, image: res.data.data });
-    
+
         }
       }
-      if(e.target.name== "C"){
+      if (e.target.name == "C") {
         data.image = reader.result
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
         if (res.data.code == 200) {
           setOptions({ ...options, C: res.data.data });
           toast(res.data.message);
-          console.warn("response",res.data.data)
+          console.warn("response", res.data.data)
           // await setCategory({ ...category, image: res.data.data });
-    
+
         }
       }
-      if(e.target.name== "D"){
+      if (e.target.name == "D") {
         data.image = reader.result
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
         if (res.data.code == 200) {
           setOptions({ ...options, D: res.data.data });
           toast(res.data.message);
-          console.warn("response",res.data.data)
+          console.warn("response", res.data.data)
           // await setCategory({ ...category, image: res.data.data });
-    
+
         }
       }
-      if (e.target.name== 'file'){
-            data.image= reader.result
-          const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-          if (res.data.code == 200) {
-            setQuestion({ ...questions, question: res.data.data });
-            toast(res.data.message);
-            console.warn("response",res.data.data)
-            // await setCategory({ ...category, image: res.data.data });
-      
-          }
+      if (e.target.name == 'file') {
+        data.image = reader.result
+        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
+        if (res.data.code == 200) {
+          setQuestion({ ...questions, question: res.data.data });
+          toast(res.data.message);
+          console.warn("response", res.data.data)
+          // await setCategory({ ...category, image: res.data.data });
+
         }
       }
-      // return
-    };
-   
-  
-  
-  
-  // const uploadImage = async e => {
-  //   console.log( e.target.name)
-  //   let data = {}
-  //   if(e.target.name== "A"){
-  //     data.image = image.A
-  //     const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-  //     if (res.data.code == 200) {
-  //       setOptions({ ...options, A: res.data.data });
-  //       toast(res.data.message);
-  //       console.warn("response",res.data.data)
-  //       // await setCategory({ ...category, image: res.data.data });
-  
-  //     }
-  //   }
-  //   if(e.target.name== "B"){
-  //     data.image = image.B
-  //     const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-  //     if (res.data.code == 200) {
-  //       setOptions({ ...options, B: res.data.data });
-  //       toast(res.data.message);
-  //       console.warn("response",res.data.data)
-  //       // await setCategory({ ...category, image: res.data.data });
-  
-  //     }
-  //   }
-  //   if(e.target.name== "C"){
-  //     data.image = image.C
-  //     const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-  //     if (res.data.code == 200) {
-  //       setOptions({ ...options, C: res.data.data });
-  //       toast(res.data.message);
-  //       console.warn("response",res.data.data)
-  //       // await setCategory({ ...category, image: res.data.data });
-  
-  //     }
-  //   }
-  //   if(e.target.name== "D"){
-  //     data.image = image.D
-  //     const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-  //     if (res.data.code == 200) {
-  //       setOptions({ ...options, D: res.data.data });
-  //       toast(res.data.message);
-  //       console.warn("response",res.data.data)
-  //       // await setCategory({ ...category, image: res.data.data });
-  
-  //     }
-  //   }
-  //   if (e.target.name== 'question'){
-  //         data.image= image.file
-  //       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-  //       if (res.data.code == 200) {
-  //         setQuestion({ ...questions, question: res.data.data });
-  //         toast(res.data.message);
-  //         console.warn("response",res.data.data)
-  //         // await setCategory({ ...category, image: res.data.data });
-    
-  //       }
-  //     }
-  //   }
+    }
+    // return
+  };
+
+
   const onSubmit = async e => {
     e.preventDefault();
-    // console.warn("options",questions, options)
     if (subcategorymeta && chaptermeta && categorymeta) {
       questions.category_meta = categorymeta
       questions.chapter_meta = chaptermeta
@@ -229,9 +185,21 @@ const AddQuestion = () => {
       questions.options = options
 
       console.warn("onsumbit", questions)
-      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-question`, questions);
-      toast(res.data.message);
-      setTimeout(function () { history.push("/questions"); }, 1000);
+      if (type == 'xml'){
+        let data ={}
+        data.category_meta = categorymeta
+        data.chapter_meta = chaptermeta
+        data.subcategory_meta = subcategorymeta
+        data.path = filepath
+        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/insert-data`, data);
+        toast(res.data.message);
+        setTimeout(function () { history.push("/questions"); }, 1000);
+      }else{
+        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-question`, questions);
+        toast(res.data.message);
+        setTimeout(function () { history.push("/questions"); }, 1000);
+      }
+    
     } else {
       alert("please select any subcategory and chaptermeta")
     }
@@ -239,19 +207,21 @@ const AddQuestion = () => {
   const [type, setType] = useState('true');
   const [optionNo, setoptionNo] = useState('4');
   const onInputSelectNumber = async e => {
-    console.log("hiiiiiiii",e.target.value)
+    console.log("hiiiiiiii", e.target.value)
     setoptionNo(e.target.value)
-   };
+  };
   // const [selectedFile, setSelectedFile] = useState(null);
   const onInputSelect = async e => {
-   setType(e.target.value)
+    console.log("e.target.valueup", e.target.value)
+    setType(e.target.value)
+    console.log("e.target.valuedown", e.target.value)
   };
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5">
         <h2 className="text-center mb-4">Add question</h2>
         <form onSubmit={e => onSubmit(e)}>
-          
+
           <div class="form-group col-sm-6">
             <label>Select Category *</label>
             <select class="form-control"
@@ -308,148 +278,170 @@ const AddQuestion = () => {
             </select>
           </div>
           <h4>Question Type</h4>
-          <div onChange={e =>onInputSelect(e) }>
+          <div value={type} onChange={e => onInputSelect(e)}>
             <input type="radio" value="true" name="type" /> text
             <input type="radio" value="false" name="type" /> image
+            <input type="radio" value="xml" name="type" /> upload Xml File
           </div>
-          <div> <h4>Option Number</h4>
-          <div onChange={e =>onInputSelectNumber(e) }>
-            <input type="radio" value="3" name="optionNo" /> Three
-            <input type="radio" value="4" name="optionNo" /> Four
-          </div></div>
-          <div className="form-group">
-            <label> Question</label>
-            {type == 'true' ? <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter question description"
-              name="question"
-              value={question}
-              onChange={e => onInputChange(e)}
-            /> :  <input
+          <div>
+            <br></br>
+          {
+            type == 'xml' ? <a  className="btn btn-primary" href={samplefile} download>Download Sample File </a>:""
+          }
+          </div>
+          <div>
+          <br></br>
+          {type == 'xml' ? <input
             type="file"
             className="form-control form-control-lg"
             placeholder="select you image question description"
             name="file"
             // value={question}
-            onChange={e => onInputChangeImage(e)}
-          /> 
-           }
+            onChange={e => onSetXlxFile(e)}
+          /> : <div>
+            <div> <h4>Option Number</h4>
+              <div onChange={e => onInputSelectNumber(e)}>
+                <input type="radio" value="3" name="optionNo" /> Three
+                <input type="radio" value="4" name="optionNo" /> Four
+              </div></div>
+            <div className="form-group">
+              <label> Question</label>
+              {type == 'true' ? <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Enter question description"
+                name="question"
+                value={question}
+                onChange={e => onInputChange(e)}
+              /> : <input
+                type="file"
+                className="form-control form-control-lg"
+                placeholder="select you image question description"
+                name="file"
+                // value={question}
+                onChange={e => onInputChangeImage(e)}
+              />
+              }
+            </div>
+
+            <div className="form-group">
+              <label> Options A</label>
+              {type == 'true' ?
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter Options A"
+                  name="A"
+                  // value={options}
+                  onChange={e => onInputChangeOptions(e)}
+                /> : <input
+                  type="file"
+                  className="form-control form-control-lg"
+                  placeholder="select you image Enter Options A"
+                  name="A"
+                  // value={question}
+                  onChange={e => onInputChangeImage(e)}
+                />}
+              {/* {type == 'true'?"": <Button name = "A" onClick = {e =>uploadImage(e)}>submit</Button>} */}
+            </div>
+            <div className="form-group">
+              <label>  Options B</label>
+              {type == 'true' ? <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Enter Options B"
+                name="B"
+                // value={options}
+                onChange={e => onInputChangeOptions(e)}
+              /> : <input
+                type="file"
+                className="form-control form-control-lg"
+                placeholder="select you image Enter Options B"
+                name="B"
+                // value={question}
+                onChange={e => onInputChangeImage(e)}
+              />}
+              {/* {type == 'true'?"": <Button name = "B" onClick = {e =>uploadImage(e)}>submit</Button>} */}
+
+            </div>
+            <div className="form-group">
+              <label>  Options C</label>
+              {type == 'true' ? <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Enter Options C"
+                name="C"
+                // value={options}
+                onChange={e => onInputChangeOptions(e)}
+              /> : <input
+                type="file"
+                className="form-control form-control-lg"
+                placeholder="select you image Enter Options C"
+                name="C"
+                // value={question}
+                onChange={e => onInputChangeImage(e)}
+              />}
+              {/* {type == 'true'?"": <Button name = "C" onClick = {e =>uploadImage(e)}>submit</Button>} */}
+
+            </div>
+            {optionNo == "4" ? <div className="form-group">
+              <label>  Options D</label>
+              {type == 'true' ?
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter Options D"
+                  name="D"
+                  // value={options}
+                  onChange={e => onInputChangeOptions(e)}
+                /> : <input
+                  type="file"
+                  className="form-control form-control-lg"
+                  placeholder="select you image Enter Options D"
+                  name="D"
+                  // value={question}
+                  onChange={e => onInputChangeImage(e)}
+                />}
+              {/* {type == 'true'?"": <Button name = "D" onClick = {e =>uploadImage(e)}>submit</Button>} */}
+            </div>
+              : ""}
+            <div class="form-group col-sm-6">
+              <label>Select Correct Answer *</label>
+              <select class="form-control" name="answer"
+                onChange={e => onInputChangeOptions(e)} >
+                <option value={"A"}> A </option>
+                <option value={"B"}> B </option>
+                <option value={"C"}> C </option>
+                {optionNo == "4" ? <option value={"D"}> D </option> : ""}
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label>deficulti level *</label>
+              <select class="form-control" name="difficulty_level"
+                onChange={e => onInputChange(e)} >
+                <option value={"0"}> Low </option>
+                <option value={"1"}> Medium </option>
+                <option value={"2"}> High </option>
+                {/* <option  value={"D"}> D </option> */}
+              </select>
+            </div>
+            <div className="form-group">
+              <label> Info</label>
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Enter info description"
+                name="info"
+                value={info}
+                onChange={e => onInputChange(e)}
+              />
+            </div>
+
           </div>
-         
-          <div className="form-group">
-            <label> Options A</label>
-            {type == 'true' ?
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Options A"
-              name="A"
-              // value={options}
-              onChange={e => onInputChangeOptions(e)}
-            /> : <input
-            type="file"
-            className="form-control form-control-lg"
-            placeholder="select you image Enter Options A"
-            name="A"
-            // value={question}
-            onChange={e => onInputChangeImage(e)}
-          /> }
-            {/* {type == 'true'?"": <Button name = "A" onClick = {e =>uploadImage(e)}>submit</Button>} */}
+          }
           </div>
-          <div className="form-group">
-            <label>  Options B</label>
-            {type == 'true'? <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Options B"
-              name="B"
-              // value={options}
-              onChange={e => onInputChangeOptions(e)}
-            />: <input
-            type="file"
-            className="form-control form-control-lg"
-            placeholder="select you image Enter Options B"
-            name="B"
-            // value={question}
-            onChange={e => onInputChangeImage(e)}
-          /> }
-           {/* {type == 'true'?"": <Button name = "B" onClick = {e =>uploadImage(e)}>submit</Button>} */}
-           
-          </div>
-          <div className="form-group">
-            <label>  Options C</label>
-            {type == 'true'? <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Options C"
-              name="C"
-              // value={options}
-              onChange={e => onInputChangeOptions(e)}
-            />:  <input
-            type="file"
-            className="form-control form-control-lg"
-            placeholder="select you image Enter Options C"
-            name="C"
-            // value={question}
-            onChange={e => onInputChangeImage(e)}
-          />} 
-          {/* {type == 'true'?"": <Button name = "C" onClick = {e =>uploadImage(e)}>submit</Button>} */}
-            
-          </div>
-          {optionNo =="4" ?<div className="form-group">
-            <label>  Options D</label>
-            {type == 'true'?
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Options D"
-              name="D"
-              // value={options}
-              onChange={e => onInputChangeOptions(e)}
-            />:<input
-            type="file"
-            className="form-control form-control-lg"
-            placeholder="select you image Enter Options D"
-            name="D"
-            // value={question}
-            onChange={e => onInputChangeImage(e)}
-          />}
-          {/* {type == 'true'?"": <Button name = "D" onClick = {e =>uploadImage(e)}>submit</Button>} */}
-          </div>
-        : ""}
-          <div class="form-group col-sm-6">
-            <label>Select Correct Answer *</label>
-            <select class="form-control" name="answer"
-              onChange={e => onInputChangeOptions(e)} >
-              <option value={"A"}> A </option>
-              <option value={"B"}> B </option>
-              <option value={"C"}> C </option>
-              {optionNo =="4" ?<option value={"D"}> D </option> : ""}
-              
-            </select>
-          </div>
-          <div class="form-group col-sm-6">
-            <label>deficulti level *</label>
-            <select class="form-control" name="difficulty_level"
-              onChange={e => onInputChange(e)} >
-              <option value={"0"}> Low </option>
-              <option value={"1"}> Medium </option>
-              <option value={"2"}> High </option>
-              {/* <option  value={"D"}> D </option> */}
-            </select>
-          </div>
-          <div className="form-group">
-            <label> Info</label>
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter info description"
-              name="info"
-              value={info}
-              onChange={e => onInputChange(e)}
-            />
-          </div>
+          
           <button className="btn btn-primary btn-block">Add question</button>
         </form>
 

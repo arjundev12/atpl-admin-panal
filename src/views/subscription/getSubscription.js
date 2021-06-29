@@ -86,6 +86,7 @@ const GetSubscription = () => {
                         <th>S.no</th>
                         <th>Title</th>
                         <th>Price</th>
+                        <th>Days</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +95,7 @@ const GetSubscription = () => {
                             <td>{i + 1}</td>
                             <td>{item.title}</td>
                             <td>{item.price}</td>
+                            <td>{item.days? item.days: ""}</td>
                         </tr>)
                     }
                 </tbody>

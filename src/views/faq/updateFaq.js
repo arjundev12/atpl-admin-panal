@@ -14,26 +14,35 @@ const UpdateFaq = () => {
   const [addreply, setAddReply] = useState({
     question: "",
     answer: "",
+    created_by: {}
+  });
+  const [user, setUser] = useState({
+    email: "example@gmail.com",
+    name: "user",
   });
 
- 
-  const { question, answer, status} = addreply;
+
+  const { question, answer, created_by, status } = addreply;
   useEffect(() => {
     loadData()
   }, []);
   const loadData = async () => {
     await axios.get(`${CONSTANT.baseUrl}/api/admin/get-faq?_id=${id}`).then((res) => {
-        console.log("response", res.data)
-        setAddReply(res.data.data);
+      console.log("response", res.data.data.created_by)
+      setAddReply(res.data.data);
+      if(res.data.data.created_by){
+        setUser(res.data.data.created_by)
+      }
+      
     }).catch(err => {
-        console.warn(err)
+      console.warn(err)
     })
 
-};
+  };
   const onInputChange = e => {
     setAddReply({ ...addreply, [e.target.name]: e.target.value });
   };
- 
+
   const onSubmit = async e => {
     e.preventDefault();
     // console.warn("options",questions, options)
@@ -55,9 +64,15 @@ const UpdateFaq = () => {
   return (
     <div className="container">
       <div className="w-75 mx-auto shadow p-5">
-        <h2 className="text-center mb-4">Add Subscription pack</h2>
+        <h2 className="text-center mb-4">Reply to User</h2>
         <form onSubmit={e => onSubmit(e)}>
-          
+       
+          <div className="form-group">
+          <h4 className="form-group">User Name :{user.name}</h4>
+          </div>
+          <div className="form-group">
+          <h4 className="form-group">Email :{user.email}</h4>
+          </div>
           <div className="form-group">
             <label> Question</label>
             <input
@@ -69,7 +84,7 @@ const UpdateFaq = () => {
               onChange={e => onInputChange(e)}
             />
           </div>
-         <div className="form-group">
+          <div className="form-group">
             <label> Answer</label>
             <input
               type="text"

@@ -63,12 +63,6 @@ const GetFaq = () => {
     }
     return (
         <div>
-            {/* <Link className="btn btn-primary" to="/">
-                back to Home
-       </Link> */}
-            <Link className="btn btn-primary add-blog" to="/add/question">
-                Add question
-       </Link>
             <div>
                     <input
                         type="text"

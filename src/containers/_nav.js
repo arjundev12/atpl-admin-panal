@@ -62,14 +62,7 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Add Questions',
-    to: '/questions',
-    // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
-  
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Add Questions xml file',
+    name: 'Questions',
     to: '/questions',
     // icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
@@ -87,6 +80,12 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'FAQ',
     to: '/faq',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Users',
+    to: '/users',
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
   // {

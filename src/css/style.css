@@ -17,7 +17,11 @@ body {
 .clearfix {
  *zoom: 1;
 }
-
+.showError{    
+	border-color: #a94442 !important;    
+	color: #a94442 !important;    
+	margin-bottom: 15px;    
+  }
 a.btn.btn-primary.back {
     margin-bottom: 10px;
 }
