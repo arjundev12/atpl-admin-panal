@@ -12,6 +12,9 @@ const AddChapter = () => {
     name: "",
     content: "",
     image: "",
+    is_mocktest: false,
+    time: "15min",
+    questions: "50",
     // category_meta: {},
     subcategory_meta: {}
   });
@@ -25,7 +28,7 @@ const AddChapter = () => {
   // };
   const [image, setImage] = useState({});
 
-  const { name, content } = chapter;
+  const { name, content , is_mocktest,time,questions} = chapter;
 
   useEffect(() => {
     loadCategory()
@@ -39,6 +42,18 @@ const AddChapter = () => {
   const onInputChange2 = async (e) => {
     console.log("eeeeeeeeeeee", e.target.name, e.target.value)
     await setSubCategorymeta(subcategory[e.target.value])
+  };
+  const onInputMock = async (e) => {
+    console.log("eeeeeeeeeeee", e.target.name, typeof e.target.value)
+    if ('is_mocktest' == e.target.name){
+      setChapter({ ...chapter, [e.target.name]: e.target.value });
+    }
+    if ('time' == e.target.name){
+      setChapter({ ...chapter, [e.target.name]: e.target.value });
+    }
+    if ('questions' == e.target.name){
+      setChapter({ ...chapter, [e.target.name]: e.target.value });
+    }
   };
   const onInputChange3 = async (e) => {
     console.log("eeeeeeeeeeee", e.target.name, e.target.value)
@@ -81,6 +96,32 @@ const AddChapter = () => {
       <div className="w-75 mx-auto shadow p-5">
         <h2 className="text-center mb-4">Add Chapter</h2>
         <form onSubmit={e => onSubmit(e)}>
+        <div class="form-group col-sm-6">
+            <label>is Mocktest *</label>
+            <select class="form-control" name = "is_mocktest" value= {is_mocktest}
+              onChange={e => onInputMock(e)} >
+                <option  value={true}> {"Yes"} </option>
+                <option  value={false}> {"No"} </option>
+            </select>
+          </div>
+          {is_mocktest == 'true' ?<div class="form-group col-sm-6">
+            <label>Total Time *</label>
+            <select class="form-control" name = "time" value={time}
+              onChange={e => onInputMock(e)} >
+                <option  value={"15min"}> {"15 Min"} </option>
+                <option  value={"30min"}> {"30 Min"} </option>
+                <option  value={"60min"}> {"60 Min"} </option>
+                <option  value={"120min"}> {"120 Min"} </option>
+            </select>
+            <label>Questions*</label>
+            <select class="form-control" name = "questions" value ={questions}
+              onChange={e => onInputMock(e)} >
+                <option  value={"50"}> {"50"} </option>
+                <option  value={"100"}> {"100"} </option>
+                <option  value={"200"}> {"200"} </option>
+                <option  value={"400"}> {"400"} </option>
+            </select>
+          </div>: "" }
         <div class="form-group col-sm-6">
             <label>Select Category *</label>
             <select class="form-control"

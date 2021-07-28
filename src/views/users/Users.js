@@ -56,46 +56,46 @@ const Users = () => {
         }
 
     };
-    const onInputChange = async (e, item) => {
-        console.warn("oninput change data ", e.target.value, item)
-        let data = {}
-        data.minner_Activity = e.target.value
-        data._id = item._id
-        data.login_type = item.login_type
-        const options = {
-            headers: {'token': localStorage.getItem('token')}
-          };
-        await axios.post(`${CONSTANT.baseUrl}/api/admin/update-profile`, data,options ).then(data1 => {
-            // console.log("response", data1)
-            // toast(data1.data.data.message)
-            loadUser()
-        }).catch(err => {
-            console.log("error", err)
-            toast(err.data.message)
-        })
+    // const onInputChange = async (e, item) => {
+    //     console.warn("oninput change data ", e.target.value, item)
+    //     let data = {}
+    //     data.minner_Activity = e.target.value
+    //     data._id = item._id
+    //     data.login_type = item.login_type
+    //     const options = {
+    //         headers: {'token': localStorage.getItem('token')}
+    //       };
+    //     await axios.post(`${CONSTANT.baseUrl}/api/admin/update-profile`, data,options ).then(data1 => {
+    //         // console.log("response", data1)
+    //         // toast(data1.data.data.message)
+    //         loadUser()
+    //     }).catch(err => {
+    //         console.log("error", err)
+    //         toast(err.data.message)
+    //     })
 
-    };
+    // };
     const onInputChange1 = async (e) => {
         console.log("search text", e.target.name, e.target.value)
         setSearch({ ...search, [e.target.name]: e.target.value });
     }
-    const userBlock = async (e, id, type) => {
-        console.log("item data", id, type)
-        let data = {}
-        data._id = id
-        data.block_user = type
-        const options = {
-            headers: {'token': localStorage.getItem('token')}
-          };
-        await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, data, options).then(data1 => {
-            // console.log("response", data1)
-            // toast(data1.data.data.message)
-            loadUser()
-        }).catch(err => {
-            console.log("error", err)
-            toast(err.data.message)
-        })
-    }
+    // const userBlock = async (e, id, type) => {
+    //     console.log("item data", id, type)
+    //     let data = {}
+    //     data._id = id
+    //     data.block_user = type
+    //     const options = {
+    //         headers: {'token': localStorage.getItem('token')}
+    //       };
+    //     await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, data, options).then(data1 => {
+    //         // console.log("response", data1)
+    //         // toast(data1.data.data.message)
+    //         loadUser()
+    //     }).catch(err => {
+    //         console.log("error", err)
+    //         toast(err.data.message)
+    //     })
+    // }
 
     return (
         <div>
