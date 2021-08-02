@@ -4,6 +4,7 @@ import CIcon from '@coreui/icons-react'
 import axios from "axios";
 import { useHistory, useLocation, Link, useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import _ from 'lodash'
 import 'react-toastify/dist/ReactToastify.css';
 import usersData from './UsersData'
 import *as  CONSTANT from '../../constant'
@@ -13,30 +14,42 @@ import { Button, Table, Modal } from 'react-bootstrap'
 const User = ({ match }) => {
   // const user = usersData.find( user => user.id.toString() === match.params.id)
   const [user, setUser] = useState({
-    id: "",
+    _id: "",
     name: "",
-    user_type: "",
-    minner_Activity: "",
-    team: []
+    email: "",
+    address: "",
+    gender: "",
+    contact_number: "",
+    profile_pic: "",
+    country_code: ""
   });
 
-  const [wallet, setWallet] = useState({});
-  const [transactions, setTransactions] = useState([]);
+
+  const [is_subscription, setIs_subscription] = useState({});
+  // const [transactions, setTransactions] = useState([]);
   const options = {
-    headers: {'token': localStorage.getItem('token')}
-  }; 
+    headers: { 'token': localStorage.getItem('token') }
+  };
 
   useEffect(() => {
     console.warn("params", match.params.id)
     getdata(match.params.id)
-    getWallet(match.params.id)
+    // getWallet(match.params.id)
   }, []);
- 
+
+  const [plans, setPlans] = useState([])
   const getdata = async (id) => {
     console.log("process.env.NODE_ENV", process.env.NODE_ENV)
-
-    const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/user-details?_id=${id}`,options);
-    console.warn("response", res.data)
+    const getplane = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-user-plans?_id=${id}`, options);
+    console.warn("responsegetplanegetplane", getplane)
+    if (getplane.data.code != 200) {
+      toast("Somethig went wrong");
+      console.log("errrrrr",getplane.data )
+    } else {
+      setPlans(getplane.data.data)
+    }
+    const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-user-details?_id=${id}`, options);
+    // console.warn("response", res.data)
     if (res.data.code != 200) {
       toast("Somethig went wrong");
     } else {
@@ -44,18 +57,18 @@ const User = ({ match }) => {
       setUser(res.data.data);
     }
   }
-  const getWallet = async (id) => {
-    const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/wallet?_id=${id}`,options);
-    console.warn("response wallet", res.data)
-    if (res.data.code != 200) {
-      // toast("Somethig went wrong");
-      console.warn(res.data)
-    } else {
-      // toast("Get successfully");
-      setWallet(res.data.data);
-      setTransactions(res.data.data.transactions)
-    }
-  }
+  // const getWallet = async (id) => {
+  //   const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/wallet?_id=${id}`,options);
+  //   console.warn("response wallet", res.data)
+  //   if (res.data.code != 200) {
+  //     // toast("Somethig went wrong");
+  //     console.warn(res.data)
+  //   } else {
+  //     // toast("Get successfully");
+  //     setWallet(res.data.data);
+  //     setTransactions(res.data.data.transactions)
+  //   }
+  // }
   return (
     <>
       {/* <!DOCTYPE html> */}
@@ -95,7 +108,7 @@ const User = ({ match }) => {
                   <div class="col-sm-3 DetailsLeft">
                     <div class="DetailsLeftProfile">
                       <figure>
-                        <img src={user.profile_pic == ""?  image: CONSTANT.img_url+ user.profile_pic} height={100} width={100} />
+                        <img src={user.profile_pic == "" ? image : image} height={100} width={100} />
                       </figure>
                       <h3> {user.name} </h3>
                       {/* <p> {user.user_type}</p> */}
@@ -107,8 +120,8 @@ const User = ({ match }) => {
 
                         {'google' == '1' ? (
                           <li><a href="#"><i class="fa fa-google" aria-hidden="true"></i></a></li>
-                        ) :""}
-{/* 
+                        ) : ""}
+                        {/* 
                         {item.is_complete_kyc == '2' ? (
                           <Link className="btn btn-primary mr-2" >verify </Link>
                         ) : (
@@ -138,64 +151,41 @@ const User = ({ match }) => {
                         <div class="row">
                           <div class="col-sm-6">
                             <ul>
-                              {/* <li>
-                              <span class="Title">Company Name</span>
-                              <span class="Discribe">bee ref</span>
-                            </li> */}
-
-                              <li>
-                                <span class="Title">Email</span>
-                                <span class="Discribe">{user.email}</span>
-                              </li>
-
                               <li>
                                 <span class="Title">Name </span>
                                 <span class="Discribe">Mr.{user.name}</span>
                               </li>
-
                               <li>
-                                <span class="Title">Mobile No</span>
-                                <span class="Discribe">{user.is_number_verify == '0' ? 'null' : user.number}</span>
+                                <span class="Title">Email</span>
+                                <span class="Discribe">{user.email}</span>
                               </li>
                               <li>
-                                <span class="Title">Country Code</span>
-                                <span class="Discribe">{user.country_code == '' ? 'null' : user.country_code}</span>
+                                <span class="Title">Address</span>
+                                <span class="Discribe">{user.address}</span>
                               </li>
-
-                              {/* <li>
-                              <span class="Title">Type</span>
-                              <span class="Discribe">{user.user_type}</span>
-                            </li> */}
-
-                              <li>
-                                <span class="Title">Email verified</span>
-                                <span class="Discribe">{user.is_email_verify == '0' ? "No" : "Yes"}</span>
-                              </li>
-
                             </ul>
                           </div>
 
                           <div class="col-sm-6">
                             <ul>
-                              <li>
-                                <span class="Title">Number Verification </span>
-                                <span class="Discribe">{user.is_number_verify == "0" ? "No" : "Yes"}</span>
-                              </li>
-
-                              {/* <li>
-                              <span class="Title">Address </span>
-                              <span class="Discribe">{user.country? user.country: 'No'}</span>
-                            </li> */}
-
-                              {/* <li>
-                              <span class="Title">Minner Activity</span>
-                              <span class="Discribe">{user.minner_Activity =="0"? "inactive": "active"}</span>
-                            </li> */}
 
                               <li>
-                                <span class="Title">Referral Id </span>
-                                <span class="Discribe">{user.Referral_id}</span>
+                                <span class="Title">Mobile No</span>
+                                <span class="Discribe">{user.contact_number}</span>
                               </li>
+                              <li>
+                                <span class="Title">Country Code</span>
+                                <span class="Discribe">{user.country_code == '' ? 'null' : user.country_code}</span>
+                              </li>
+                              <li>
+                                <span class="Title">Gender</span>
+                                <span class="Discribe">{user.gender}</span>
+                              </li>
+                              <li>
+                                <span class="Title">Is Subscription</span>
+                                <span class="Discribe">{plans.length > 0? "Yes": "No"}</span>
+                              </li>
+
 
                               {/* <li>
                               <span class="Title">Rating </span>
@@ -213,127 +203,68 @@ const User = ({ match }) => {
                       </div>
                       <div>
                         <div class="DetailsContent">
-                          <h3>Wallet Details</h3>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <ul>
-                                {/* <li>
-                                <span class="Title">Wallet Holder Name</span>
-                                <span class="Discribe">{wallet.user_id.name?wallet.user_id.name:'user'}</span>
-                              </li> */}
-                                {/* <li>
-                                <span class="Title">Status</span>
-                                <span class="Discribe">{wallet.status}</span>
-                              </li> */}
-                                <li>
-                                  <span class="Title">Referral Amount </span>
-                                  <span class="Discribe">{wallet.referral_ammount} {wallet.coin_type}</span>
-                                </li>
-                                <li>
-                                  <span class="Title">Mining Amount </span>
-                                  <span class="Discribe">{wallet.mining_ammount}  {wallet.coin_type}</span>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="col-sm-6">
-                              <ul>
-
-                                <li>
-                                  <span class="Title">Earning Amount </span>
-                                  <span class="Discribe">{wallet.earning_ammount}  {wallet.coin_type}</span>
-                                </li>
-                                <li>
-                                  <span class="Title">Total Amount</span>
-                                  <span class="Discribe">{wallet.total_amount}  {wallet.coin_type}</span>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* <div class="tadble-detail">
-                      <h2>Documents</h2>
-                      <div class="verifi">
-                        <li>
-                          <i class="fa fa-pencil mr-10" aria-hidden="true"></i>
-                          <Link className="btn btn-primary" to={`/view/doc/${user._id}`}>{user.isDocumentVerify=="uploade"?"Uploade":user.isDocumentVerify=="verified"? "Verified":user.isDocumentVerify }</Link>
-                        </li>
-                      </div>
-                      <Table striped bordered hover>
-                        <thead>
-                          <tr>
-                            <th>S.no</th>
-                            <th>Name</th>
-                            <th>Front_Id</th>
-                            <th>Back_Id</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            user.Documents.map((item, i) => <tr>
-                              <td>{i + 1}</td>
-                              <td>{item.name}</td>
-                              <td><img src={CONSTANT.img_url + item.front_Id} height={30} width={30} /></td>
-                              <td><img src={CONSTANT.img_url + item.back_Id} height={30} width={30} /></td>
-                            </tr>)
-                          }
-                        </tbody>
-                      </Table>
-                    </div> */}
-                      <div class="tadble-detail">
-                        <h2>team List</h2>
+                          <h3>Subscription Details</h3>
+                          {plans.length> 0? <div>
                         <Table striped bordered hover>
                           <thead>
                             <tr>
                               <th>S.no</th>
-                              <th>username</th>
-                              <th>minner Activity</th>
-
+                              <th>Title</th>
+                              <th>Price</th>
+                              <th>Buy Date</th>
+                              <th>Days</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
                             {
-                              user.team.map((item, i) =>
+                              plans.map((item, i) =>
                                 <tr>
                                   <td>{i + 1}</td>
-                                  <td>{item.username}</td>
-                                  <td>{item.minner_Activity + ""}</td>
-                                  <td> {user.isVehicleComplete == true ? "Yes" : "No"}</td>
+                                  <td>{item.plan_meta.title}</td>
+                                  <td>{item.plan_meta.price}</td>
+                                  <td>{item.buy_date.split(" ")[0]}</td>
+                                  <td>{item.plan_meta.days}</td>
+                                  <td>{""}</td>
 
                                 </tr>)
                             }
                           </tbody>
-                        </Table>
+                        </Table></div> 
+                      : ""}
+                          {/* { !_.isEmpty(is_subscription)?<div class="row">
+                              <div class="col-sm-6">
+                                <ul>
+
+                                  <li>
+                                    <span class="Title">Plan Name </span>
+                                    <span class="Discribe">{is_subscription.subscription_id.title}</span>
+                                  </li>
+                                  <li>
+                                    <span class="Title">Plan Amount </span>
+                                    <span class="Discribe">{is_subscription.subscription_id.price} rs </span>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="col-sm-6">
+                                <ul>
+
+                                  <li>
+                                    <span class="Title">Buy date </span>
+                                    <span class="Discribe">{is_subscription.buy_date.split(" ")[0]}</span>
+                                  </li>
+                                  <li>
+                                    <span class="Title">Days</span>
+                                    <span class="Discribe">{is_subscription.subscription_id.days}</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>:   <span class="Title">User have not any subscription</span>
+
+                          } */}
+                        </div>
+
                       </div>
-{/*  Daily EarningDaily EarningDaily Earning*/}
-                      <div class="tadble-detail">
-                        <h2>Daily Earning</h2>
-                        <Table striped bordered hover>
-                          <thead>
-                            <tr>
-                              <th>S.no</th>
-                              <th>Total Earning</th>
-                              <th>Date</th>
-                              {/* <th>Actions</th> */}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              transactions.map((item, i) =>
-                                <tr>
-                                  <td>{i + 1}</td>
-                                  <td>{item.totalAmount}</td>
-                                  <td>{item._id.date}</td>
-                                  {/* <td> {user.isVehicleComplete == true ? "Yes" : "No"}</td> */}
-                                </tr>)
-                            }
-                          </tbody>
-                        </Table>
-                      </div>
-
-
-
 
                     </div>
 

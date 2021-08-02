@@ -34,6 +34,7 @@ const Users = () => {
     useEffect(() => {
         loadUser();
     }, [page, total, search]);
+    const [totalSubscription, setTotalSubscription] = useState("0");
     const loadUser = async () => {
         let array = []
         const data = {
@@ -53,6 +54,15 @@ const Users = () => {
             // toast("List get successfully")
             setUser(res.data.data.docs);
             await setTotal(res.data.data.total)
+        }
+        const res1 = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-total-subscription`, options);
+        console.warn("res1ponse", res1.data)
+        if (res1.data.code != 200) {
+          toast("Somethig went wrong");
+        } else {
+          toast("Get successfully");
+          setTotalSubscription(res1.data.data)
+          // totalSubscription =  res.data.data
         }
 
     };
@@ -112,6 +122,7 @@ const Users = () => {
                     onChange={e => onInputChange1(e)}
                 />
             </div>
+            <label>Total subscrib User : {totalSubscription}</label>
 
             <Table striped bordered hover>
                 <thead>
@@ -123,7 +134,7 @@ const Users = () => {
                         <th>Type</th>
                         {/* <th>Minner Status</th> */}
                         {/* <th className="address">type</th> */}
-                        {/* <th>Actions</th> */}
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,14 +152,14 @@ const Users = () => {
                                     <option value={true} >Active</option>
                                     <option value={false}>Inactive</option>
                                 </select></td> */}
-                            {/* <td><Link className="btn btn-primary mr-2 " to={`/user/${item._id}`}>view </Link>
-                                {item.block_user == '1' ? (
+                            <td><Link className="btn btn-primary mr-2 " to={`/user/${item._id}`}>view </Link>
+                                {/* {item.block_user == '1' ? (
                                     <Button className="btn btn-primary bg-red mr-2" onClick={e => userBlock(e, item._id, "0")}> Blocked </Button>
                                 ) : (
                                     <Button className="btn btn-primary bg-green mr-2" onClick={e => userBlock(e, item._id, "1")}> Unblock </Button>
-                                )}
+                                )} */}
                                 
-                            </td> */}
+                            </td>
                         </tr>)
                     }
                 </tbody>
