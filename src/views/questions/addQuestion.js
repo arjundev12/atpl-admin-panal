@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Button, Table } from 'react-bootstrap'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import samplefile from '../../assets/samplesheet.xlsx'
+import samplefile from '../../assets/samplesheet.f09eb717.xlsx'
 
 const AddQuestion = () => {
   let history = useHistory();
@@ -195,6 +195,11 @@ const AddQuestion = () => {
         toast(res.data.message);
         setTimeout(function () { history.push("/questions"); }, 1000);
       }else{
+        if(type == 'false'){
+          questions.is_image = true
+        }else if(type == 'true'){
+          questions.is_image = false
+        }
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-question`, questions);
         toast(res.data.message);
         setTimeout(function () { history.push("/questions"); }, 1000);
