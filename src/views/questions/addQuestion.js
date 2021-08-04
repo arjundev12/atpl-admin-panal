@@ -105,73 +105,72 @@ const AddQuestion = () => {
   }
   const onInputChangeImage = async e => {
     console.warn("............image....", [e.target.name], e.target.files[0])
-    // let image_as_base64 = URL.createObjectURL(e.target.files[0])
-    // let image_as_files = e.target.files[0];
-    // console.log(" URL.createObjectURL", image_as_base64)
+    const formData = new FormData();
+    formData.append(
+      "image",
+      e.target.files[0],
+    );
+    console.warn("image", formData)
+    if (e.target.name == "A") {
+      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
+      if (res.data.code == 200) {
+        setOptions({ ...options, A: res.data.data });
+        toast(res.data.message);
+        console.warn("response", res.data.data)
+        // await setCategory({ ...category, image: res.data.data });
 
-    // setImage({ file: image_as_files })
-    let reader = await new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = async function () {
-      console.warn("................", reader.result)
-      // await setImage( {...image, [e.target.name]: reader.result })
-      let data = {}
-      if (e.target.name == "A") {
-        data.image = reader.result
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-        if (res.data.code == 200) {
-          setOptions({ ...options, A: res.data.data });
-          toast(res.data.message);
-          console.warn("response", res.data.data)
-          // await setCategory({ ...category, image: res.data.data });
-
-        }
-      }
-      if (e.target.name == "B") {
-        data.image = reader.result
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-        if (res.data.code == 200) {
-          setOptions({ ...options, B: res.data.data });
-          toast(res.data.message);
-          console.warn("response", res.data.data)
-          // await setCategory({ ...category, image: res.data.data });
-
-        }
-      }
-      if (e.target.name == "C") {
-        data.image = reader.result
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-        if (res.data.code == 200) {
-          setOptions({ ...options, C: res.data.data });
-          toast(res.data.message);
-          console.warn("response", res.data.data)
-          // await setCategory({ ...category, image: res.data.data });
-
-        }
-      }
-      if (e.target.name == "D") {
-        data.image = reader.result
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-        if (res.data.code == 200) {
-          setOptions({ ...options, D: res.data.data });
-          toast(res.data.message);
-          console.warn("response", res.data.data)
-          // await setCategory({ ...category, image: res.data.data });
-
-        }
-      }
-      if (e.target.name == 'file') {
-        data.image = reader.result
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/upload-image`, data);
-        if (res.data.code == 200) {
-          setQuestion({ ...questions, question: res.data.data });
-          toast(res.data.message);
-          console.warn("response", res.data.data)
-          // await setCategory({ ...category, image: res.data.data });
-
-        }
       }
     }
+    if (e.target.name == "B") {
+      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
+      if (res.data.code == 200) {
+        setOptions({ ...options, B: res.data.data });
+        toast(res.data.message);
+        console.warn("response", res.data.data)
+        // await setCategory({ ...category, image: res.data.data });
+
+      }
+    }
+    if (e.target.name == "C") {
+      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
+      if (res.data.code == 200) {
+        setOptions({ ...options, C: res.data.data });
+        toast(res.data.message);
+        console.warn("response", res.data.data)
+        // await setCategory({ ...category, image: res.data.data });
+
+      }
+    }
+    if (e.target.name == "D") {
+      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
+      if (res.data.code == 200) {
+        setOptions({ ...options, D: res.data.data });
+        toast(res.data.message);
+        console.warn("response", res.data.data)
+        // await setCategory({ ...category, image: res.data.data });
+
+      }
+    }
+    if (e.target.name == 'file') {
+      const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
+      if (res.data.code == 200) {
+        setQuestion({ ...questions, question: res.data.data });
+        toast(res.data.message);
+        console.warn("response", res.data.data)
+        // await setCategory({ ...category, image: res.data.data });
+
+      }
+    }
+
+
+
+    // let reader = await new FileReader();
+    // reader.readAsDataURL(e.target.files[0]);
+    // reader.onload = async function () {
+    //   console.warn("................", reader.result)
+    //   // await setImage( {...image, [e.target.name]: reader.result })
+     
+    // }
     // return
   };
 

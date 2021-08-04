@@ -111,7 +111,7 @@ const GetQuestions = () => {
                     {
                         question.map((item, i) => <tr>
                             <td>{i + 1}</td>
-                            { item.isImage== "false" ?<td>{item.question}</td> : <img src={CONSTANT.img_url+ item.isImage} height={30} width={50} /> }
+                            { item.is_image== false ?<td>{item.question}</td> : <img src={item.question} height={30} width={50} /> }
                             <td>{item.chapter_meta.name?item.chapter_meta.name:""}</td>
                             <td>{item.subcategory_meta?item.subcategory_meta.name:""}</td>
                             <td>{item.category_meta?item.category_meta.name:""}</td>
