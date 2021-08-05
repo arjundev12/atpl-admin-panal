@@ -88,13 +88,13 @@ const _nav =  [
     to: '/users',
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
-  // {
-  //   _tag: 'CSidebarNavItem',
-  //   name: 'Manage Price',
-  //   to: '/price',
-  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Manage Static Content',
+    to: '/cms',
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   
-  // },
+  },
   // {
   //   _tag: 'CSidebarNavItem',
   //   name: 'Varifications',

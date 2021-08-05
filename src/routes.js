@@ -23,10 +23,15 @@ const UpdateFaq = React.lazy(() => import('./views/faq/updateFaq'));
 const GetSubscription = React.lazy(() => import('./views/subscription/getSubscription'));
 const AddSubscription = React.lazy(() => import('./views/subscription/addSubscription'));
 
+const Cms = React.lazy(()=> import('./views/cms/cms'))
+const EditCms = React.lazy(()=> import('./views/cms/editCms'))
+
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 const EditUser = React.lazy(() => import('./views/users/editUser'));
 const AddUsers = React.lazy(() => import('./views/users/addUser'));
+
+
 
 const Login = React.lazy(() => import('./views/pages/login/Login'));
 const Transactions = React.lazy(() => import('./views/Transactions/transactions'));
@@ -37,6 +42,7 @@ const Refferal = React.lazy(() => import('./views/Transactions/referral'));
 const ViewPrice = React.lazy(() => import('./views/ManagePrice/viewprice'));
 const Verification = React.lazy(() => import('./views/varification/verification'));
 const ViewDoc = React.lazy(() => import('./views/varification/viewDoc'));
+
 
 
 
@@ -63,6 +69,8 @@ const routes = [
   { path: '/subscription', exact: true, name: 'Subscription', component: GetSubscription },
   { path: '/add/subscription', exact: true, name: 'Add Subscription', component: AddSubscription },
 
+  { path : '/cms', exact :true, name : 'Cms', component: Cms },
+  { path : '/cms/edit/:id', exact :true, name : 'Cms Edit', component: EditCms },
 
 
   { path: '/users/add-users', name: 'Add User', component: AddUsers },

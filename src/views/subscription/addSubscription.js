@@ -14,11 +14,12 @@ const AddSubscription = () => {
   const [addsubscription, setAddsubscription] = useState({
     title: "",
     price: "",
-    days : ""
+    days : "30",
+    benefits: ""
   });
 
 
-  const { title, price ,days} = addsubscription;
+  const { title, price ,days, benefits} = addsubscription;
   useEffect(() => {
     // loadCategory()
   }, []);
@@ -99,6 +100,17 @@ const AddSubscription = () => {
               <option value={"90"}> 90 days </option>
               {/* <option  value={"D"}> D </option> */}
             </select>
+          </div>
+          <div className="form-group">
+            <label> Benefits</label>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Enter banefits description"
+              name="benefits"
+              value={benefits}
+              onChange={e => onInputChange(e)}
+            />
           </div>
           <button className="btn btn-primary btn-block">Add Subscription pack</button>
         </form>
