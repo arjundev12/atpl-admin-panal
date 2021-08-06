@@ -17,6 +17,12 @@ body {
 .clearfix {
  *zoom: 1;
 }
+.modal-footer {
+    /* margin-top: 36px; */
+    background: #fff;
+    margin-top: 0;
+}
+
 .showError{    
 	border-color: #a94442 !important;    
 	color: #a94442 !important;    
@@ -494,9 +500,7 @@ th.status {
     display: flex;
 
 } */
-.modal-footer {
-    margin-top: 36px;
-}
+
 .verifi {
     float: right;
 }

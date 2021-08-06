@@ -38,6 +38,7 @@ const User = ({ match }) => {
   }, []);
 
   const [plans, setPlans] = useState([])
+  const [mocktest, setMocktest] = useState([])
   const getdata = async (id) => {
     console.log("process.env.NODE_ENV", process.env.NODE_ENV)
     const getplane = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-user-plans?_id=${id}`, options);
@@ -56,18 +57,37 @@ const User = ({ match }) => {
       toast("Get successfully");
       setUser(res.data.data);
     }
+
+    const res1 = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-mocktest?_id=${id}`, options);
+    // console.warn("response", res.data)
+    if (res1.data.code != 200) {
+      toast("Somethig went wrong");
+    } else {
+      toast("Get successfully");
+      setMocktest(res1.data.data);
+    }
   }
-  // const getWallet = async (id) => {
-  //   const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/wallet?_id=${id}`,options);
-  //   console.warn("response wallet", res.data)
-  //   if (res.data.code != 200) {
-  //     // toast("Somethig went wrong");
-  //     console.warn(res.data)
-  //   } else {
-  //     // toast("Get successfully");
-  //     setWallet(res.data.data);
-  //     setTransactions(res.data.data.transactions)
-  //   }
+  const [mocktestDetail, setMocktestDetail] = useState([])
+  const [show, setShow] = useState(false);
+  const getSummary = async (e, item) => {
+    const res = await axios.get(`${CONSTANT.baseUrl}/api/admin/get-mocktest-by-id?_id=${item._id}`,options);
+    console.warn("response wallet", res.data)
+    if (res.data.code != 200) {
+      // toast("Somethig went wrong");
+      console.warn(res.data)
+    } else {
+     await setMocktestDetail(res.data.data )
+     setShow(true);
+      // toast("Get successfully");
+      // setWallet(res.data.data);
+      // setTransactions(res.data.data.transactions)
+    }
+  }
+
+  const handleClose = () => setShow(false);
+
+  // const handleShow = async () => {
+  //     setShow(true);
   // }
   return (
     <>
@@ -232,38 +252,132 @@ const User = ({ match }) => {
                           </tbody>
                         </Table></div> 
                       : ""}
-                          {/* { !_.isEmpty(is_subscription)?<div class="row">
-                              <div class="col-sm-6">
-                                <ul>
+                        </div>
+                        <div class="DetailsContent">
+                          <h3>MockTest Details</h3>
+                        <Table striped bordered hover>
+                          <thead>
+                            <tr>
+                              <th>S.no</th>
+                              <th>MockTest Name</th>
+                              <th>Percentage</th>
+                              <th>Result</th>
+                              <th>summary</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              mocktest.map((item, i) =>
+                                <tr>
+                                  <td>{i + 1}</td>
+                                  <td>{item.chapter.name}</td>
+                                  <td>{item.percentage}</td>
+                                  <td>{item.tag}</td>
+                                  <Button className="btn btn-primary " onClick={e => getSummary(e, item)}> Summary</Button>
+                                </tr>)
+                            }
+                          </tbody>
+                        </Table></div> 
+                        <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Content</Modal.Title>
+                </Modal.Header>
+                <div class="DetailsContent">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <ul>
+                              <li>
+                                <span class="Title">Status    :</span>
+                                <label> {mocktestDetail?.online_status}</label>
+                              </li>
+                              <li>
+                                <span class="Title">Category   :</span>
+                                <label> {mocktestDetail?.chapter?.subcategory_meta?.category_meta?.name}</label>
+                              </li>
+                              <li>
+                                <span class="Title">Subcategory   :</span>
+                                <label>{mocktestDetail?.chapter?.subcategory_meta?.name}</label>
+                              </li>
+                              <li>
+                                <span class="Title">Chapter Name    :</span>
+                                <label>{mocktestDetail?.chapter?.name}</label>
+                              </li>
+                            
+                            </ul>
+                          </div>
 
-                                  <li>
-                                    <span class="Title">Plan Name </span>
-                                    <span class="Discribe">{is_subscription.subscription_id.title}</span>
-                                  </li>
-                                  <li>
-                                    <span class="Title">Plan Amount </span>
-                                    <span class="Discribe">{is_subscription.subscription_id.price} rs </span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div class="col-sm-6">
-                                <ul>
+                          <div class="col-sm-6">
+                            <ul>
+                            <li>
+                                <span class="Title">Total Questions   :</span>
+                                <label>{mocktestDetail?.total_questions}</label>
+                              </li>
+                              <li>
+                                <span class="Title">Attampt Total   :</span>
+                                <label>{mocktestDetail?.attampt_total}</label>
+                              </li>
+                              <li>
+                                <span class="Title">wrong_questions   :</span>
+                                <label>{mocktestDetail?.wrong_questions}</label>
+                              </li>
+                              <li>
+                                <span class="Title">correct_answer   :</span>
+                                <label>{mocktestDetail?.correct_answer}</label>
 
-                                  <li>
-                                    <span class="Title">Buy date </span>
-                                    <span class="Discribe">{is_subscription.buy_date.split(" ")[0]}</span>
-                                  </li>
-                                  <li>
-                                    <span class="Title">Days</span>
-                                    <span class="Discribe">{is_subscription.subscription_id.days}</span>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>:   <span class="Title">User have not any subscription</span>
-
-                          } */}
+                              </li>
+                              <li>
+                                <span class="Title">percentage   :</span>
+                                <label>{mocktestDetail?.percentage}</label>
+                              </li>
+                              <li>
+                                <span class="Title">Result   :</span>
+                                <label>{mocktestDetail?.tag}</label>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                {/* <div class="row">
+                    <div class="state-name-code">
+                        <div className="form-group">
+                        </div>
+                        <div className="form-group">
+                        </div>
+                        <div className="form-group col-sm-6">
+                        </div>
+                        <div className="form-group col-sm-6">
                         </div>
 
+                        <div className="form-group col-sm-6">
+                        </div>
+                        <div className="form-group col-sm-6">
+                        </div>
+
+                        <div className="form-group col-sm-6">
+                        </div>
+                        <div className="form-group col-sm-6">
+                        </div>
+
+                        <div className="form-group col-sm-6">
+                        </div>
+                        <div className="form-group col-sm-6">
+                        </div>
+                        <div className="form-group col-sm-6">
+                            <label>{mocktestDetail?.online_time}</label>
+                        </div>
+                    </div >
+                </div> */}
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+           
+                     
+
+                      
                       </div>
 
                     </div>
