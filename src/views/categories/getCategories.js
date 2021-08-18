@@ -28,9 +28,9 @@ const GetCategories = () => {
         }
         if (!(Object.keys(search).length === 0 && search.constructor === Object)) {
             data.searchData = search.text
-        } 
+        }
         // console.log("datarequest ", data)
-        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/get-category`,data);
+        const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/get-category`, data);
         // console.warn(res.data.data)
         for (let item of res.data.data.docs) {
             if (item.name) {
@@ -46,18 +46,18 @@ const GetCategories = () => {
         data.id = item._id
         // data.login_type = item.login_type
         console.log("request", data)
-    //     await axios.put(`${CONSTANT.baseUrl}/api/admin/get-category`, data).then((data1) => {
-    //         console.log("response", data1)
-    //         // toast( data1.data.data.message)
-    //         loadCategory()
-    //     }).catch((err) => {
-    //         console.log("error", err)
-    //         toast(err.data.message)
-    //     })
+        //     await axios.put(`${CONSTANT.baseUrl}/api/admin/get-category`, data).then((data1) => {
+        //         console.log("response", data1)
+        //         // toast( data1.data.data.message)
+        //         loadCategory()
+        //     }).catch((err) => {
+        //         console.log("error", err)
+        //         toast(err.data.message)
+        //     })
 
     };
-    const onInputChange1 = async (e)=>{
-        console.log("search text", e.target.name, e.target.value )
+    const onInputChange1 = async (e) => {
+        console.log("search text", e.target.name, e.target.value)
         setSearch({ ...search, [e.target.name]: e.target.value });
     }
     const deleteCategory = async (e, item) => {
@@ -79,16 +79,16 @@ const GetCategories = () => {
        </Link> */}
             <Link className="btn btn-primary add-blog" to="/add/category">
                 Add Category
-       </Link>
+            </Link>
             <div>
-                    <input
-                        type="text"
-                        className="searchBox"
-                        placeholder="search here...."
-                        name="text"
-                        value={search.text}
-                        onChange={e => onInputChange1(e)}
-                    />
+                <input
+                    type="text"
+                    className="searchBox"
+                    placeholder="search here...."
+                    name="text"
+                    value={search.text}
+                    onChange={e => onInputChange1(e)}
+                />
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -107,6 +107,7 @@ const GetCategories = () => {
                             <td>{i + 1}</td>
                             <td>{item.name}</td>
                             <Button className="btn btn-primary bg-green mr-2" onClick={e => deleteCategory(e, item._id,)}> delete </Button>
+                                <Link className="btn btn-primary"  to={`/edit/category/${item._id}`}> edit </Link>
                             {/* <td>{item.content}</td> */}
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}

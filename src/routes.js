@@ -9,8 +9,12 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
 
 const getCategories = React.lazy(() => import('./views/categories/getCategories'));
 const addCategories = React.lazy(() => import('./views/categories/addCategories'));
+const editCategory = React.lazy(() => import('./views/categories/editCategory'));
+
 const getSubcategories = React.lazy(() => import('./views/subcategories/getSubcategories'));
 const AddSubcategories = React.lazy(() => import('./views/subcategories/addSubcategory'));
+const EditSubcategory = React.lazy(() => import('./views/subcategories/editSubcategory'));
+
 const getChapters = React.lazy(() => import('./views/chapters/getChapters'));
 const AddChapter = React.lazy(() => import('./views/chapters/addChapter'));
 
@@ -53,10 +57,11 @@ const routes = [
 
   { path: '/categories', exact: true, name: 'Categories', component: getCategories },
   { path: '/add/category', exact: true, name: 'addCategory', component: addCategories },
+  { path: '/edit/category/:id', exact: true, name: 'Edit Category', component: editCategory },
 
   { path: '/subcategories', exact: true, name: 'Categories', component: getSubcategories },
   { path: '/add/subcategory', exact: true, name: 'Add Sub Category', component: AddSubcategories },
-
+  { path: '/edit/subcategory/:id', exact: true, name: 'Edit Subcategory', component: EditSubcategory },
   { path: '/chapters', exact: true, name: 'Chapters', component: getChapters },
   { path: '/add/chapter', exact: true, name: 'Add Chapter', component: AddChapter },
 

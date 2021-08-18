@@ -108,6 +108,7 @@ const GetSubCategories = () => {
                             <td>{item.name}</td>
                             <td>{item.category_meta.name?item.category_meta.name:""}</td>
                             <Button className="btn btn-primary bg-green mr-2" onClick={e => deleteCategory(e, item._id,)}> delete </Button>
+                            <Link className="btn btn-primary"  to={`/edit/subcategory/${item._id}`}> edit </Link>
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>
