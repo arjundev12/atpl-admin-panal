@@ -21,7 +21,8 @@ const User = ({ match }) => {
     gender: "",
     contact_number: "",
     profile_pic: "",
-    country_code: ""
+    country_code: "",
+    user_id: ""
   });
 
 
@@ -172,6 +173,10 @@ const User = ({ match }) => {
                         <div class="row">
                           <div class="col-sm-6">
                             <ul>
+                            <li>
+                                <span class="Title">User Id</span>
+                                <span class="Discribe">{user.user_id}</span>
+                              </li>
                               <li>
                                 <span class="Title">Name </span>
                                 <span class="Discribe">Mr.{user.name}</span>
