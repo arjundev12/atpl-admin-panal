@@ -68,7 +68,7 @@ const GetCategories = () => {
             loadCategory()
         }).catch((err) => {
             console.log("error", err)
-            toast(err.data.message)
+            // toast(err.data.message)
         })
 
     };

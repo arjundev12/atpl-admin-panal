@@ -81,10 +81,10 @@ const Cms = () => {
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/cms/create`, formdata);
         console.log("hi request", res)
         if (res.data.code == 200) {
-            toast(res.data.message)
+            // toast(res.data.message)
             handleClose()
         } else {
-            toast(res.data.message)
+            // toast(res.data.message)
             handleClose()
         }
 

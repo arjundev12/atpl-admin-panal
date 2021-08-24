@@ -89,23 +89,37 @@ const Users = () => {
         console.log("search text", e.target.name, e.target.value)
         setSearch({ ...search, [e.target.name]: e.target.value });
     }
-    // const userBlock = async (e, id, type) => {
-    //     console.log("item data", id, type)
-    //     let data = {}
-    //     data._id = id
-    //     data.block_user = type
-    //     const options = {
-    //         headers: {'token': localStorage.getItem('token')}
-    //       };
-    //     await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, data, options).then(data1 => {
-    //         // console.log("response", data1)
-    //         // toast(data1.data.data.message)
-    //         loadUser()
-    //     }).catch(err => {
-    //         console.log("error", err)
-    //         toast(err.data.message)
-    //     })
-    // }
+    const userBlock = async (e, id, type) => {
+        console.log("item data", id, type, typeof type)
+        let data = {}
+        data._id = id
+        data.block_user = type
+        const options = {
+            headers: {'token': localStorage.getItem('token')}
+          };
+        await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, data, options).then(data1 => {
+            // console.log("response", data1)
+            // toast(data1.data.data.message)
+            loadUser()
+        }).catch(err => {
+            console.log("error", err)
+            // toast(err.data.message)
+        })
+    }
+    const deleteUser = async (e, id, type) => {
+        console.log("item data", id, type, typeof type)
+        const options = {
+            headers: {'token': localStorage.getItem('token')}
+          };
+        await axios.delete(`${CONSTANT.baseUrl}/api/admin/delete-user?_id=${id}`).then(data1 => {
+            console.log("deleteUsers>>>>>>>>>", data1)
+            // toast(data1.data.data.message)
+            loadUser()
+        }).catch(err => {
+            console.log("error", err)
+            // toast(err.data.message)
+        })
+    }
 
     return (
         <div>
@@ -129,8 +143,8 @@ const Users = () => {
                     <tr>
                         <th>S.no</th>
                         <th>Name</th>
+                        <th>user_id</th>
                         <th>Email</th>
-                        <th>Username</th>
                         <th>Type</th>
                         {/* <th>Minner Status</th> */}
                         {/* <th className="address">type</th> */}
@@ -142,8 +156,8 @@ const Users = () => {
                         user.map((item, i) => <tr>
                             <td>{i + 1}</td>
                             <td>{item.name}</td>
+                            <td>{item.user_id}</td>
                             <td>{item.email}</td>
-                            <td>{item.username}</td>
                             <td>{item.user_type}</td>
                             {/* <td>{item.minner_Activity + ""}</td> */}
                             {/* <td>
@@ -153,18 +167,18 @@ const Users = () => {
                                     <option value={false}>Inactive</option>
                                 </select></td> */}
                             <td><Link className="btn btn-primary mr-2 " to={`/user/${item._id}`}>view </Link>
-                                {/* {item.block_user == '1' ? (
+                                {item.block_user == '1' ? (
                                     <Button className="btn btn-primary bg-red mr-2" onClick={e => userBlock(e, item._id, "0")}> Blocked </Button>
                                 ) : (
                                     <Button className="btn btn-primary bg-green mr-2" onClick={e => userBlock(e, item._id, "1")}> Unblock </Button>
-                                )} */}
-                                
+                                )}
+                                <Button className="btn btn-primary" onClick={e => deleteUser(e, item._id)}> Delete </Button>
                             </td>
                         </tr>)
                     }
                 </tbody>
             </Table>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             {
                 total > 0? <Pagination
                 showPerPage={showPerPage}

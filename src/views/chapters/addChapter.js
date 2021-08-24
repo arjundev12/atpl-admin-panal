@@ -85,7 +85,7 @@ const AddChapter = () => {
       chapter.category_meta = categorymeta
       console.warn("onsumbit", chapter)
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-chapter`, chapter);
-      toast(res.data.message);
+      // toast(res.data.message);
       setTimeout(function () { history.push("/chapters"); }, 1000);
     } else {
       alert("please select any category")

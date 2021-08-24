@@ -17,9 +17,11 @@ const EditSubcategory = React.lazy(() => import('./views/subcategories/editSubca
 
 const getChapters = React.lazy(() => import('./views/chapters/getChapters'));
 const AddChapter = React.lazy(() => import('./views/chapters/addChapter'));
+const EditChapter = React.lazy(() => import('./views/chapters/editChapter'));
 
 const GetQuestions = React.lazy(() => import('./views/questions/getQuestions'));
 const AddQuestions = React.lazy(() => import('./views/questions/addQuestion'));
+const EditQuestion = React.lazy(() => import('./views/questions/editQuestion'));
 
 const GetFaq = React.lazy(() => import('./views/faq/getFaq'));
 const UpdateFaq = React.lazy(() => import('./views/faq/updateFaq'));
@@ -64,9 +66,11 @@ const routes = [
   { path: '/edit/subcategory/:id', exact: true, name: 'Edit Subcategory', component: EditSubcategory },
   { path: '/chapters', exact: true, name: 'Chapters', component: getChapters },
   { path: '/add/chapter', exact: true, name: 'Add Chapter', component: AddChapter },
+  { path: '/edit/chapter/:id', exact: true, name: 'Edit chapter', component: EditChapter },
 
   { path: '/questions', exact: true, name: 'questions', component: GetQuestions },
   { path: '/add/question', exact: true, name: 'Add question', component: AddQuestions },
+  { path: '/edit/question/:id', exact: true, name: 'Edit question', component: EditQuestion },
 
   { path: '/faq', exact: true, name: 'faq', component: GetFaq },
   { path: '/update/faq/:id', exact: true, name: 'reply', component: UpdateFaq },

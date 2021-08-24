@@ -51,7 +51,7 @@ const AddCategories = () => {
     e.preventDefault();
     console.warn("onsumbit", category)
     const res =await axios.post(`${CONSTANT.baseUrl}/api/admin/add-category`, category);
-    toast(res.data.message);
+    // toast(res.data.message);
     setTimeout(function(){history.push("/categories"); }, 1000);
     
   };

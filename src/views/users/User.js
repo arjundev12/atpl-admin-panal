@@ -165,6 +165,7 @@ const User = ({ match }) => {
                     <div class="DetailsRight">
                       <h3>Profile Information</h3>
                       <i class="fa fa-pencil" aria-hidden="true"></i>
+                      {/* {console.log()} */}
                       <Link className="btn btn-primary mr-2" to={`/user/edit/${user._id}`}> edit </Link>
                       {/* <p>With a knack for connecting dots and uncovering trends, Lisa finds unique opportunities for brands to reach consumers in new ways that inspire and motivate them to act. Lisa has more than 15 years of agency and client-side experience translating business strategy into integra ted, multi-channel marketing communications campaigns for some of the world’s most beloved brands.</p> */}
                       <div class="DetailsContent">

@@ -68,7 +68,7 @@ const GetQuestions = () => {
             loadQuestion()
         }).catch((err) => {
             console.log("error", err)
-            toast(err.data.message)
+            // toast(err.data.message)
         })
 
     };
@@ -116,6 +116,7 @@ const GetQuestions = () => {
                             <td>{item.subcategory_meta?item.subcategory_meta.name:""}</td>
                             <td>{item.category_meta?item.category_meta.name:""}</td>
                             <Button className="btn btn-primary bg-green mr-2" onClick={e => deletequestion(e, item._id,)}> delete </Button>
+                            <Link className="btn btn-primary"  to={`/edit/question/${item._id}`}> edit </Link>
                             {/* <td>
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>

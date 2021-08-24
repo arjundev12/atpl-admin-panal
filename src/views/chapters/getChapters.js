@@ -62,7 +62,7 @@ const GetChapters = () => {
             loadchapter()
         }).catch((err) => {
             console.log("error", err)
-            toast(err.data.message)
+            // toast(err.data.message)
         })
 
     };
@@ -108,7 +108,8 @@ const GetChapters = () => {
                             <td>{item.subcategory_meta.name?item.subcategory_meta.name:""}</td>
                             <td>{item.subcategory_meta.name?item.subcategory_meta.category_meta.name:""}</td>
                             <Button className="btn btn-primary bg-green mr-2" onClick={e => deletechapter(e, item._id,)}> delete </Button>
-                            {/* <td>
+                            <Link className="btn btn-primary"  to={`/edit/chapter/${item._id}`}> edit </Link>
+                            {/* <td>edit/chapter/
                                 <select class="form-control" name="status" value={item.status ? item.status : 'active'}
                                     onChange={e => onInputChange(e, item)}>
                                     <option value={'active'} >Active</option>

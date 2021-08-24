@@ -115,7 +115,7 @@ const AddQuestion = () => {
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
       if (res.data.code == 200) {
         setOptions({ ...options, A: res.data.data });
-        toast(res.data.message);
+        // toast(res.data.message);
         console.warn("response", res.data.data)
         // await setCategory({ ...category, image: res.data.data });
 
@@ -125,7 +125,7 @@ const AddQuestion = () => {
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
       if (res.data.code == 200) {
         setOptions({ ...options, B: res.data.data });
-        toast(res.data.message);
+        // toast(res.data.message);
         console.warn("response", res.data.data)
         // await setCategory({ ...category, image: res.data.data });
 
@@ -135,7 +135,7 @@ const AddQuestion = () => {
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
       if (res.data.code == 200) {
         setOptions({ ...options, C: res.data.data });
-        toast(res.data.message);
+        // toast(res.data.message);
         console.warn("response", res.data.data)
         // await setCategory({ ...category, image: res.data.data });
 
@@ -145,7 +145,7 @@ const AddQuestion = () => {
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
       if (res.data.code == 200) {
         setOptions({ ...options, D: res.data.data });
-        toast(res.data.message);
+        // toast(res.data.message);
         console.warn("response", res.data.data)
         // await setCategory({ ...category, image: res.data.data });
 
@@ -155,7 +155,7 @@ const AddQuestion = () => {
       const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/aws/upload/image`,  formData, { "Content-Type": "multipart/form-data" });
       if (res.data.code == 200) {
         setQuestion({ ...questions, question: res.data.data });
-        toast(res.data.message);
+        // toast(res.data.message);
         console.warn("response", res.data.data)
         // await setCategory({ ...category, image: res.data.data });
 
@@ -191,7 +191,7 @@ const AddQuestion = () => {
         data.subcategory_meta = subcategorymeta
         data.path = filepath
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/insert-data`, data);
-        toast(res.data.message);
+        // toast(res.data.message);
         setTimeout(function () { history.push("/questions"); }, 1000);
       }else{
         if(type == 'false'){
@@ -200,7 +200,7 @@ const AddQuestion = () => {
           questions.is_image = false
         }
         const res = await axios.post(`${CONSTANT.baseUrl}/api/admin/add-question`, questions);
-        toast(res.data.message);
+        // toast(res.data.message);
         setTimeout(function () { history.push("/questions"); }, 1000);
       }
     

@@ -28,7 +28,7 @@ const EditCategory = () => {
         let response = await axios.put(`${CONSTANT.baseUrl}/api/admin/edit-category`, data);
         console.log("response", response)
         if (response.data.code == 200) {
-            toast("Update successfully");
+            // toast("Update successfully");
             setData(response.data.data);
             // setTimeout(function () { history.push("/vehicles"); }, 2000);
             // history.push("/users");

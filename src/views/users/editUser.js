@@ -13,19 +13,22 @@ const EditUser = () => {
         name: "",
         username: "",
         email: "",
-        number: "",
+        contact_number: "",
         website: "",
         minner_Activity:"",
         is_email_verify: "",
         is_number_verify: "",
-        is_complete_kyc: "",
-        country_code: ""
+        block_user: "",
+        country_code: "",
+        DOB: "",
+        address: "",
+        profile_pic: ""
     });
     const options = {
         headers: {'token': localStorage.getItem('token')}
       }; 
 
-    const { name, username, email, number, website,minner_Activity,is_email_verify,is_number_verify ,is_complete_kyc, country_code} = user;
+    const { name,DOB,profile_pic, email, contact_number,is_email_verify,is_number_verify ,block_user, address,country_code} = user;
     const onInputChange = e => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -37,38 +40,11 @@ const EditUser = () => {
     const onSubmit = async e => {
         e.preventDefault();
         console.log("request", user)
-        let data = {}
-        if (user.name) {
-            data.name = user.name
-        }
-        if (user.username) {
-            data.username = user.username
-        }
-        if (user.email) {
-            data.email = user.email
-        }
-        if (user.number) {
-            data.number = user.number
-        }
-        if (user.is_number_verify) {
-            data.is_number_verify = user.is_number_verify
-        }
-        if (user.minner_Activity) {
-            data.minner_Activity = user.minner_Activity
-        }
-        if (user.is_complete_kyc) {
-            data.is_complete_kyc = user.is_complete_kyc
-        }
-        if (user.country_code) {
-            data.country_code = user.country_code
-        }
-        data._id = user._id 
-        data.login_type = 'manual'
-        console.log("daaaaaaa", data)
-        let response = await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, data,options);
-
+        console.log("daaaaaaa", user)
+        let response = await axios.put(`${CONSTANT.baseUrl}/api/admin/update-user`, user,options);
+// console.log("response", response)
         if (response.data.code == 200) {
-            toast("Update successfully");
+            // toast("Update successfully");
             setTimeout(function(){history.push("/users"); }, 3000);
             // history.push("/users");
         }
@@ -78,7 +54,7 @@ const EditUser = () => {
 
         // const result =
       
-        await axios.get(`${CONSTANT.baseUrl}/api/admin/user-details?_id=${id}`,options).then((res) => {
+        await axios.get(`${CONSTANT.baseUrl}/api/admin/get-user-details?_id=${id}`,options).then((res) => {
             console.log("response", res.data)
             setUser(res.data.data);
         }).catch(err => {
@@ -120,19 +96,16 @@ const EditUser = () => {
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-3 UserLeft">
-
                                     <form>
                                         <figure>
-                                            <img src={image} />
+                                            <img src={ profile_pic == ""?image: profile_pic} />
                                         </figure>
-
                                         <figcaption>
                                             <span><i class="fa fa-upload" aria-hidden="true"></i>Upload Images</span>
                                             <input type="file" name="" />
                                             <button><i class="fa fa-check" aria-hidden="true"></i></button>
                                         </figcaption>
                                     </form>
-
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="UserRight">
@@ -145,26 +118,24 @@ const EditUser = () => {
                                                         onChange={e => onInputChange(e)} />
                                                 </div>
                                                 <div class="form-group col-sm-6">
-                                                    <label>Username</label>
-                                                    <input type="text" name="username" class="form-control" placeholder="" value={username}
+                                                    <label>Date of Birth</label>
+                                                    <input type="text" name="DOB" class="form-control" placeholder="" value={DOB}
                                                         onChange={e => onInputChange(e)} />
                                                 </div>
-                                                
                                                 <div class="form-group col-sm-6">
                                                     <label>Mobile Number</label>
-                                                    <input type="text" name="number" class="form-control" placeholder="" value={number}
+                                                    <input type="text" name="contact_number" class="form-control" placeholder="" value={contact_number}
                                                         onChange={e => onInputChange(e)} />
                                                 </div>
                                                 <div class="form-group col-sm-6">
-                                                    <label>Country Code</label>
-                                                    <input type="text" name="country_code" class="form-control" placeholder="" value={country_code}
-                                                        onChange={e => onInputChange(e)} />
+                                                    <label>Number Verify</label>
+                                                    <select class="form-control" name="is_number_verify" value={is_number_verify}
+                                                        onChange={e => onInputChange(e)}>
+                                                        <option value={"1"}>Yes</option>
+                                                        <option value={"0"}>No</option>
+                                                        <option value={"2"}>pending</option>
+                                                    </select>
                                                 </div>
-                                                {/* <div class="form-group col-sm-6">
-                                                    <label>Address</label>
-                                                    <input type="text" name="address" class="form-control" placeholder="" value={address}
-                                                        onChange={e => onInputChange(e)} />
-                                                </div> */}
                                                 <div class="form-group col-sm-6">
                                                     <label>Email</label>
                                                     <input type="text" name="email" class="form-control" placeholder="" value={email}
@@ -179,75 +150,35 @@ const EditUser = () => {
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-sm-6">
-                                                    <label>Number Verify</label>
-                                                    <select class="form-control" name="is_number_verify" value={is_number_verify}
+                                                    <label>Address</label>
+                                                    <input type="text" name="address" class="form-control" placeholder="" value={address}
+                                                        onChange={e => onInputChange(e)} />
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>Country Code</label>
+                                                    <input type="text" name="country_code" class="form-control" placeholder="" value={country_code}
+                                                        onChange={e => onInputChange(e)} />
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>Block User</label>
+                                                    <select class="form-control" name="block_user" value={block_user}
                                                         onChange={e => onInputChange(e)}>
                                                         <option value={"1"}>Yes</option>
                                                         <option value={"0"}>No</option>
-                                                        <option value={"2"}>pending</option>
+                                                        {/* <option value={"2"}>pending</option> */}
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-sm-6">
-                                                    <label>is_complete_kyc</label>
-                                                    <select class="form-control" name="is_complete_kyc" value={is_complete_kyc}
-                                                        onChange={e => onInputChange(e)}>
-                                                        <option value={"1"}>Yes</option>
-                                                        <option value={"0"}>No</option>
-                                                        <option value={"2"}>pending</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-sm-6">
+                                                {/* <div class="form-group col-sm-6">
                                                     <label>Minner Activity</label>
                                                     <select class="form-control" name="minner_Activity" value={minner_Activity}
                                                         onChange={e => onInputChange(e)}>
                                                         <option value={true}>Active</option>
                                                         <option value={false}>Inactive</option>
                                                     </select>
-                                                </div>
-                                               
-                                                {/* <div class="form-group col-sm-6">
-                                                    <label>Document Verify</label>
-                                                    <select class="form-control" name="isDocumentVerify" value={isDocumentVerify}
-                                                        onChange={e => onInputChange(e)}>
-                                                        <option value="verified">verified</option>
-                                                        <option value="rejected">rejected</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-sm-6">
-                                                    <label>subscription</label>
-                                                    <select class="form-control" name="subscription" value={subscription}
-                                                        onChange={e => onInputChange(e)} >
-                                                        <option value={true}>true</option>
-                                                        <option value={false}>false</option>
-                                                    </select>
                                                 </div> */}
-                                                {/* <div class="form-group col-sm-6">
-                                                    <label>Driver Status</label>
-                                                    <select class="form-control" name="driverStatus" value={driverStatus}
-                                                        onChange={e => onInputChange(e)}>
-                                                        <option value="active">active</option>
-                                                        <option value="inactive">inactive</option>
-                                                        <option value="blocked">blocked</option>
-                                                    </select>
-                                                </div> */}
-                                                {/* <div class="form-group col-sm-6">
-                                                    <label>Address</label>
-                                                    <input type="text" name="address" class="form-control" placeholder="" value={address}
-                                                        onChange={e => onInputChange(e)} />
-                                                </div> */}
-                                                {/* <div class="form-group col-sm-6">
-                                                    <label>Driver Type</label>
-                                                    <select class="form-control" name="loginType" value={loginType}
-                                                        onChange={e => onInputChange(e)}>
-                                                        <option value="Driver_partner">Driver partner</option>
-                                                        <option value="Fleet_partner">Fleet partner</option>
-                                                    </select>
-                                                </div> */}
-
                                                 <div class="col-sm-12">
-                                                    <button>Submit</button>
+                                                    <button onClick={onSubmit}>Submit</button>
                                                 </div>
-
                                             </div>
                                         </form>
                                     </div>
@@ -261,7 +192,7 @@ const EditUser = () => {
                 <script src="js/owl.carousel.js "></script>
 
             </body>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </html>
     </>
         // <div className="container">
